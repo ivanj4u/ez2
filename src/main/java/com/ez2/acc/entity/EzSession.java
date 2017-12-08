@@ -23,8 +23,8 @@ import java.io.Serializable;
 public class EzSession extends AuditTrail implements Serializable {
 
     @Id
-    @Column(name = "username", length = 20, nullable = false)
-    private String username;
+    @Column(name = "user_id", nullable = false)
+    private String userId;
     @Column(name = "session_id", length = 32)
     private String sessionId;
     @Column(name = "ip", length = 20)
@@ -33,12 +33,12 @@ public class EzSession extends AuditTrail implements Serializable {
     public EzSession() {
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getSessionId() {

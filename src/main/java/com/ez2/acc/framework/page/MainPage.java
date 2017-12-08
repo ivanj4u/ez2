@@ -68,7 +68,7 @@ public class MainPage extends HorizontalLayout implements View {
             EzUser user = VaadinSession.getCurrent().getAttribute(EzUser.class);
             if (user != null) {
                 String sessionId = VaadinSession.getCurrent().getSession().getId();
-                if (!servicesSession.sessionCheck(user.getUsername(), sessionId)) {
+                if (!servicesSession.sessionCheck(user.getUserId(), sessionId)) {
                     Notification.show("Anda telah keluar", "Anda Telah Keluar/Login dari Komputer Lain!", Notification.Type.HUMANIZED_MESSAGE);
                     VaadinSession.getCurrent().close();
                     return false;

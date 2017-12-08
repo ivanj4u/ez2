@@ -21,171 +21,171 @@ import java.util.Date;
 @Table(name = "ez_ia", schema = "ez")
 public class EzIA extends AuditTrail implements Serializable {
 
-	private String noRek;
-	private String noCOA;
-	private String norekIAMaster;
-	private String description;
-	private Date tglBuka;
-	private BigDecimal saldoAwal;
-	private BigDecimal saldoAkhir;
-	private BigDecimal mutasiD;
-	private BigDecimal mutasiC;
-	private String companyCode;
-	private String saldoNormal;
-	private Date lastTrxDate;
-	private String alternateId;
+    @Id
+    @Column(name = "no_rek", nullable = false, length = 15)
+    private String noRek;
+    @Column(name = "no_coa", nullable = false, length = 13)
+    private String noCOA;
+    @Column(name = "no_rek_ia_master", nullable = false, length = 7)
+    private String norekIAMaster;
+    @Column(name = "description", length = 200)
+    private String description;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "tgl_buka", length = 13)
+    private Date tglBuka;
+    @Column(name = "saldo_awal", nullable = false, precision = 20, scale = 2)
+    private BigDecimal saldoAwal;
+    @Column(name = "saldo_akhir", nullable = false, precision = 20, scale = 2)
+    private BigDecimal saldoAkhir;
+    @Column(name = "mutasi_d", nullable = false, precision = 20, scale = 2)
+    private BigDecimal mutasiD;
+    @Column(name = "mutasi_c", nullable = false, precision = 20, scale = 2)
+    private BigDecimal mutasiC;
+    @Column(name = "company_code", length = 5)
+    private String companyCode;
+    @Column(name = "saldo_normal", length = 1)
+    private String saldoNormal;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "last_trx_date", length = 13)
+    private Date lastTrxDate;
+    @Column(name = "alternate_id", length = 20)
+    private String alternateId;
 
-	public EzIA() {
-	}
+    public EzIA() {
+    }
 
-	public EzIA(String noRek, String noCOA, String norekIAMaster,
-			BigDecimal saldoAwal, BigDecimal saldoAkhir, BigDecimal mutasiD,
-			BigDecimal mutasiC) {
-		this.noRek = noRek;
-		this.noCOA = noCOA;
-		this.norekIAMaster = norekIAMaster;
-		this.saldoAwal = saldoAwal;
-		this.saldoAkhir = saldoAkhir;
-		this.mutasiD = mutasiD;
-		this.mutasiC = mutasiC;
-	}
+    public EzIA(String noRek, String noCOA, String norekIAMaster,
+                BigDecimal saldoAwal, BigDecimal saldoAkhir, BigDecimal mutasiD,
+                BigDecimal mutasiC) {
+        this.noRek = noRek;
+        this.noCOA = noCOA;
+        this.norekIAMaster = norekIAMaster;
+        this.saldoAwal = saldoAwal;
+        this.saldoAkhir = saldoAkhir;
+        this.mutasiD = mutasiD;
+        this.mutasiC = mutasiC;
+    }
 
-	public EzIA(String noRek, String noCOA, String norekIAMaster,
-			String description, Date tglBuka, BigDecimal saldoAwal,
-			BigDecimal saldoAkhir, BigDecimal mutasiD, BigDecimal mutasiC,
-			String companyCode, String saldoNormal, Date lastTrxDate) {
-		this.noRek = noRek;
-		this.noCOA = noCOA;
-		this.norekIAMaster = norekIAMaster;
-		this.description = description;
-		this.tglBuka = tglBuka;
-		this.saldoAwal = saldoAwal;
-		this.saldoAkhir = saldoAkhir;
-		this.mutasiD = mutasiD;
-		this.mutasiC = mutasiC;
-		this.companyCode = companyCode;
-		this.saldoNormal = saldoNormal;
-		this.lastTrxDate = lastTrxDate;
-	}
+    public EzIA(String noRek, String noCOA, String norekIAMaster,
+                String description, Date tglBuka, BigDecimal saldoAwal,
+                BigDecimal saldoAkhir, BigDecimal mutasiD, BigDecimal mutasiC,
+                String companyCode, String saldoNormal, Date lastTrxDate) {
+        this.noRek = noRek;
+        this.noCOA = noCOA;
+        this.norekIAMaster = norekIAMaster;
+        this.description = description;
+        this.tglBuka = tglBuka;
+        this.saldoAwal = saldoAwal;
+        this.saldoAkhir = saldoAkhir;
+        this.mutasiD = mutasiD;
+        this.mutasiC = mutasiC;
+        this.companyCode = companyCode;
+        this.saldoNormal = saldoNormal;
+        this.lastTrxDate = lastTrxDate;
+    }
 
-	@Id
-	@Column(name = "no_rek", nullable = false, length = 15)
-	public String getNoRek() {
-		return this.noRek;
-	}
+    public String getNoRek() {
+        return this.noRek;
+    }
 
-	public void setNoRek(String noRek) {
-		this.noRek = noRek;
-	}
+    public void setNoRek(String noRek) {
+        this.noRek = noRek;
+    }
 
-	@Column(name = "no_coa", nullable = false, length = 13)
-	public String getNoCOA() {
-		return this.noCOA;
-	}
+    public String getNoCOA() {
+        return this.noCOA;
+    }
 
-	public void setNoCOA(String noCOA) {
-		this.noCOA = noCOA;
-	}
+    public void setNoCOA(String noCOA) {
+        this.noCOA = noCOA;
+    }
 
-	@Column(name = "no_rek_ia_master", nullable = false, length = 7)
-	public String getNorekIAMaster() {
-		return this.norekIAMaster;
-	}
+    public String getNorekIAMaster() {
+        return this.norekIAMaster;
+    }
 
-	public void setNorekIAMaster(String norekIAMaster) {
-		this.norekIAMaster = norekIAMaster;
-	}
+    public void setNorekIAMaster(String norekIAMaster) {
+        this.norekIAMaster = norekIAMaster;
+    }
 
-	@Column(name = "description", length = 200)
-	public String getDescription() {
-		return this.description;
-	}
+    public String getDescription() {
+        return this.description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "tgl_buka", length = 13)
-	public Date getTglBuka() {
-		return this.tglBuka;
-	}
+    public Date getTglBuka() {
+        return this.tglBuka;
+    }
 
-	public void setTglBuka(Date tglBuka) {
-		this.tglBuka = tglBuka;
-	}
+    public void setTglBuka(Date tglBuka) {
+        this.tglBuka = tglBuka;
+    }
 
-	@Column(name = "saldo_awal", nullable = false, precision = 20, scale = 2)
-	public BigDecimal getSaldoAwal() {
-		return this.saldoAwal;
-	}
+    public BigDecimal getSaldoAwal() {
+        return this.saldoAwal;
+    }
 
-	public void setSaldoAwal(BigDecimal saldoAwal) {
-		this.saldoAwal = saldoAwal;
-	}
+    public void setSaldoAwal(BigDecimal saldoAwal) {
+        this.saldoAwal = saldoAwal;
+    }
 
-	@Column(name = "saldo_akhir", nullable = false, precision = 20, scale = 2)
-	public BigDecimal getSaldoAkhir() {
-		return this.saldoAkhir;
-	}
+    public BigDecimal getSaldoAkhir() {
+        return this.saldoAkhir;
+    }
 
-	public void setSaldoAkhir(BigDecimal saldoAkhir) {
-		this.saldoAkhir = saldoAkhir;
-	}
+    public void setSaldoAkhir(BigDecimal saldoAkhir) {
+        this.saldoAkhir = saldoAkhir;
+    }
 
-	@Column(name = "mutasi_d", nullable = false, precision = 20, scale = 2)
-	public BigDecimal getMutasiD() {
-		return this.mutasiD;
-	}
+    public BigDecimal getMutasiD() {
+        return this.mutasiD;
+    }
 
-	public void setMutasiD(BigDecimal mutasiD) {
-		this.mutasiD = mutasiD;
-	}
+    public void setMutasiD(BigDecimal mutasiD) {
+        this.mutasiD = mutasiD;
+    }
 
-	@Column(name = "mutasi_c", nullable = false, precision = 20, scale = 2)
-	public BigDecimal getMutasiC() {
-		return this.mutasiC;
-	}
+    public BigDecimal getMutasiC() {
+        return this.mutasiC;
+    }
 
-	public void setMutasiC(BigDecimal mutasiC) {
-		this.mutasiC = mutasiC;
-	}
+    public void setMutasiC(BigDecimal mutasiC) {
+        this.mutasiC = mutasiC;
+    }
 
-	@Column(name = "company_code", length = 5)
-	public String getCompanyCode() {
-		return this.companyCode;
-	}
+    public String getCompanyCode() {
+        return this.companyCode;
+    }
 
-	public void setCompanyCode(String companyCode) {
-		this.companyCode = companyCode;
-	}
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
 
-	@Column(name = "saldo_normal", length = 1)
-	public String getSaldoNormal() {
-		return this.saldoNormal;
-	}
+    public String getSaldoNormal() {
+        return this.saldoNormal;
+    }
 
-	public void setSaldoNormal(String saldoNormal) {
-		this.saldoNormal = saldoNormal;
-	}
+    public void setSaldoNormal(String saldoNormal) {
+        this.saldoNormal = saldoNormal;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "last_trx_date", length = 13)
-	public Date getLastTrxDate() {
-		return this.lastTrxDate;
-	}
+    public Date getLastTrxDate() {
+        return this.lastTrxDate;
+    }
 
-	public void setLastTrxDate(Date lastTrxDate) {
-		this.lastTrxDate = lastTrxDate;
-	}
+    public void setLastTrxDate(Date lastTrxDate) {
+        this.lastTrxDate = lastTrxDate;
+    }
 
-	@Column(name = "alternate_id", length = 20)
-	public String getAlternateId() {
-		return alternateId;
-	}
+    public String getAlternateId() {
+        return alternateId;
+    }
 
-	public void setAlternateId(String alternateId) {
-		this.alternateId = alternateId;
-	}
+    public void setAlternateId(String alternateId) {
+        this.alternateId = alternateId;
+    }
 
 }

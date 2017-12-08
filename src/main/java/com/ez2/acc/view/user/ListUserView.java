@@ -37,9 +37,9 @@ import java.util.List;
 @SpringView
 public class ListUserView extends AbstractSearchScreen implements View {
     private static final Logger logger = LoggerFactory.getLogger(ListUserView.class);
-    private final String USERNAME = "Id Pengguna";
+    private final String USER_ID = "Id Pengguna";
     private final String NAME = "Nama";
-    private final String EMAIL = "Email";
+    private final String COMPANY_ID = "Id Perusahaan";
     private final String TELP = "No Telp";
     @Autowired
     private UserServices servicesUser;
@@ -79,9 +79,9 @@ public class ListUserView extends AbstractSearchScreen implements View {
     protected void initTableData() {
         list = new ArrayList<>();
         table = (Grid<EzUser>) initTable();
-        table.addColumn(EzUser::getUsername).setCaption(USERNAME);
+        table.addColumn(EzUser::getUserId).setCaption(USER_ID);
+        table.addColumn(EzUser::getCompanyCode).setCaption(COMPANY_ID);
         table.addColumn(EzUser::getName).setCaption(NAME);
-        table.addColumn(EzUser::getEmail).setCaption(EMAIL);
         table.addColumn(EzUser::getPhone).setCaption(TELP);
     }
 
@@ -142,7 +142,7 @@ public class ListUserView extends AbstractSearchScreen implements View {
         if (pojo != null) {
             EzUser userBaru = (EzUser) pojo;
             for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getUsername().equals(userBaru.getUsername())) {
+                if (list.get(i).getUserId().equals(userBaru.getUserId())) {
                     list.remove(i);
                     list.add(userBaru);
                     break;

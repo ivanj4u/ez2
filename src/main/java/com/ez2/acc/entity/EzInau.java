@@ -22,48 +22,48 @@ import java.io.Serializable;
 @Table(name = "ez_inau", schema = "ez")
 public class EzInau implements Serializable {
 
-	private String key;
-	private String filter;
-	private String companyCode;
-	private String object;
+    @Id
+    @Column(name = "key_id", nullable = false)
+    private String key;
+    @Column(name = "filter")
+    private String filter;
+    @Column(name = "company_code", length = 5)
+    private String companyCode;
+    @Column(name = "json_object", nullable = false, columnDefinition = "TEXT")
+    private String object;
 
-	public EzInau() {
-	}
+    public EzInau() {
+    }
 
-	@Id
-	@Column(name = "key_id", nullable = false)
-	public String getKey() {
-		return key;
-	}
+    public String getKey() {
+        return key;
+    }
 
-	public void setKey(String key) {
-		this.key = key;
-	}
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-	@Column(name = "filter")
-	public String getFilter() {
-		return filter;
-	}
+    public String getFilter() {
+        return filter;
+    }
 
-	public void setFilter(String filter) {
-		this.filter = filter;
-	}
+    public void setFilter(String filter) {
+        this.filter = filter;
+    }
 
-	@Column(name = "company_code", length = 5)
-	public String getCompanyCode() {
-		return companyCode;
-	}
+    public String getCompanyCode() {
+        return companyCode;
+    }
 
-	public void setCompanyCode(String companyCode) {
-		this.companyCode = companyCode;
-	}
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
 
-	@Column(name = "json_object", nullable = false, columnDefinition = "TEXT")
-	public String getObject() {
-		return object;
-	}
+    public String getObject() {
+        return object;
+    }
 
-	public void setObject(String object) {
-		this.object = object;
-	}
+    public void setObject(String object) {
+        this.object = object;
+    }
 }

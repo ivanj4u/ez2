@@ -138,8 +138,8 @@ public class LoginPage extends VerticalLayout implements View {
                         // Navigate to MainPage
                         UI.getCurrent().getNavigator().navigateTo(MainPage.VIEW_NAME);
                     } else {
-                        logger.error("Status User : " + user.getUsername() + " tidak benar!");
-                        showFailedLogin("Status User : " + user.getUsername() + " tidak benar!");
+                        logger.error("Status User : " + user.getUserId() + " tidak benar!");
+                        showFailedLogin("Status User : " + user.getUserId() + " tidak benar!");
                     }
                 } else {
                     // Cek maksimal salah password
@@ -173,7 +173,7 @@ public class LoginPage extends VerticalLayout implements View {
             if (valid) {
                 user.setLoginFailCount(0);
                 user.setLastLogin(now);
-                servicesSession.sessionLogin(user.getUsername(), VaadinSession.getCurrent().getSession().getId(), getUI().getPage().getWebBrowser().getAddress());
+                servicesSession.sessionLogin(user.getUserId(), VaadinSession.getCurrent().getSession().getId(), getUI().getPage().getWebBrowser().getAddress());
             } else {
                 user.setLoginFailCount(user.getLoginFailCount() + 1);
             }

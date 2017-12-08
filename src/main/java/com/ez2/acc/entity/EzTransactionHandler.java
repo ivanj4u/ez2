@@ -12,23 +12,23 @@
 
 package com.ez2.acc.entity;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "ez_transaction_handler", schema = "ez")
-public class EzTransactionHandler extends AuditTrail implements java.io.Serializable {
+public class EzTransactionHandler extends AuditTrail implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	@Id
+	@Column(name = "kode_transaksi", nullable = false, length = 5)
 	private String kodeTransaksi;
+	@Column(name = "description", length = 200)
 	private String description;
+	@Column(name = "class_name", length = 200)
 	private String className;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "last_change", nullable = false)
 	private Date lastChange;
 
 	public EzTransactionHandler() {
@@ -46,8 +46,6 @@ public class EzTransactionHandler extends AuditTrail implements java.io.Serializ
 		this.lastChange = lastChange;
 	}
 
-	@Id
-	@Column(name = "kode_transaksi", nullable = false, length = 5)
 	public String getKodeTransaksi() {
 		return this.kodeTransaksi;
 	}
@@ -56,7 +54,6 @@ public class EzTransactionHandler extends AuditTrail implements java.io.Serializ
 		this.kodeTransaksi = kodeTransaksi;
 	}
 
-	@Column(name = "description", length = 200)
 	public String getDescription() {
 		return this.description;
 	}
@@ -65,7 +62,6 @@ public class EzTransactionHandler extends AuditTrail implements java.io.Serializ
 		this.description = description;
 	}
 
-	@Column(name = "class_name", length = 200)
 	public String getClassName() {
 		return this.className;
 	}
@@ -74,8 +70,6 @@ public class EzTransactionHandler extends AuditTrail implements java.io.Serializ
 		this.className = className;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "last_change", nullable = false, length = 29)
 	public Date getLastChange() {
 		return this.lastChange;
 	}

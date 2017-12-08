@@ -25,11 +25,11 @@ public class JoinUserGroup implements Serializable {
     private String group_groupName;
     // Join EzUser
     private EzUser user;
-    private String user_username, user_name;
+    private String user_userId, user_name;
     // Join EzUserGroup
     private EzUserGroup userGroup;
     private long userGroup_groupId;
-    private String userGroup_username;
+    private String userGroup_userId;
 
     public JoinUserGroup(EzGroup group, EzUser user, EzUserGroup userGroup) {
         // Set EzGroup
@@ -39,11 +39,11 @@ public class JoinUserGroup implements Serializable {
         // Set EzUser
         this.user = user;
         setUser_name(user.getName());
-        setUser_username(user.getUsername());
+        setUser_userId(user.getUserId());
         // Set EzUserGroup
         this.userGroup = userGroup;
         setUserGroup_groupId(userGroup.getGroupId());
-        setUserGroup_username(userGroup.getUsername());
+        setUserGroup_userId(userGroup.getUserId());
     }
 
     public long getGroup_groupId() {
@@ -62,12 +62,12 @@ public class JoinUserGroup implements Serializable {
         this.group_groupName = group_groupName;
     }
 
-    public String getUser_username() {
-        return user_username;
+    public String getUser_userId() {
+        return user_userId;
     }
 
-    public void setUser_username(String user_username) {
-        this.user_username = user_username;
+    public void setUser_userId(String user_userId) {
+        this.user_userId = user_userId;
     }
 
     public String getUser_name() {
@@ -86,11 +86,11 @@ public class JoinUserGroup implements Serializable {
         this.userGroup_groupId = userGroup_groupId;
     }
 
-    public String getUserGroup_username() {
-        return userGroup_username;
+    public String getUserGroup_userId() {
+        return userGroup_userId;
     }
 
-    public void setUserGroup_username(String userGroup_username) {
-        this.userGroup_username = userGroup_username;
+    public void setUserGroup_userId(String userGroup_userId) {
+        this.userGroup_userId = userGroup_userId;
     }
 }

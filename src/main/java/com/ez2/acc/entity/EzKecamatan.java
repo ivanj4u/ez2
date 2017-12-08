@@ -22,40 +22,39 @@ import java.io.Serializable;
 @Table(name = "ez_kecamatan", schema = "ez")
 public class EzKecamatan extends AuditTrail implements Serializable {
 
-	private String kodeKecamatan;
-	private String kodeKabupaten;
-	private String namaKecamatan;
+    @Id
+    @Column(name = "kode_kecamatan", nullable = false, length = 6)
+    private String kodeKecamatan;
+    @Column(name = "kode_kabupaten", nullable = false, length = 4)
+    private String kodeKabupaten;
+    @Column(name = "nama_kecamatan", nullable = false, length = 100)
+    private String namaKecamatan;
 
-	public EzKecamatan() {
-	}
+    public EzKecamatan() {
+    }
 
-	@Id
-	@Column(name = "kode_kecamatan", nullable = false, length = 6)
-	public String getKodeKecamatan() {
-		return this.kodeKecamatan;
-	}
+    public String getKodeKecamatan() {
+        return this.kodeKecamatan;
+    }
 
-	public void setKodeKecamatan(String kodeKecamatan) {
-		this.kodeKecamatan = kodeKecamatan;
-	}
-	
-	@Id
-	@Column(name = "kode_kabupaten", nullable = false, length = 4)
-	public String getKodeKabupaten() {
-		return this.kodeKabupaten;
-	}
+    public void setKodeKecamatan(String kodeKecamatan) {
+        this.kodeKecamatan = kodeKecamatan;
+    }
 
-	public void setKodeKabupaten(String kodeKabupaten) {
-		this.kodeKabupaten = kodeKabupaten;
-	}
+    public String getKodeKabupaten() {
+        return this.kodeKabupaten;
+    }
 
-	@Column(name = "nama_kecamatan", nullable = false, length = 100)
-	public String getNamaKecamatan() {
-		return this.namaKecamatan;
-	}
+    public void setKodeKabupaten(String kodeKabupaten) {
+        this.kodeKabupaten = kodeKabupaten;
+    }
 
-	public void setNamaKecamatan(String namaKecamatan) {
-		this.namaKecamatan = namaKecamatan;
-	}
+    public String getNamaKecamatan() {
+        return this.namaKecamatan;
+    }
+
+    public void setNamaKecamatan(String namaKecamatan) {
+        this.namaKecamatan = namaKecamatan;
+    }
 
 }

@@ -12,20 +12,15 @@
 
 package com.ez2.acc.dao;
 
-import com.ez2.acc.entity.EzUser;
+import com.ez2.acc.entity.EzKelurahan;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface UserDao extends CrudRepository<EzUser, String> {
+public interface KelurahanDao extends CrudRepository<EzKelurahan, String> {
+
+    List<EzKelurahan> queryEzKelurahansByKodeKecamatanEquals(String kodeKecamatan);
 
     @Override
-    List<EzUser> findAll();
-
-    List<EzUser> queryEzUsersByNameLike(String name);
-
-    List<EzUser> queryEzUsersByUserIdEquals(String userId);
-
-    List<EzUser> queryEzUsersByUserIdEqualsAndNameIsLike(String userId, String name);
-
+    List<EzKelurahan> findAll();
 }

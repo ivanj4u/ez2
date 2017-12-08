@@ -82,7 +82,7 @@ public class MenuLoader {
         Vector<EzMenu> vTemp = new Vector<>();
         try {
 
-            List<EzUserGroup> userGroups = servicesUserGroup.getUserGroupByUsername(user.getUsername());
+            List<EzUserGroup> userGroups = servicesUserGroup.getUserGroupByUser(user.getUserId());
             for (EzUserGroup userGroup : userGroups) {
                 List<EzPriviledge> priviledges = servicesPriviledge.getGroupPriviledge(String.valueOf(userGroup.getGroupId()));
                 for (EzPriviledge p : priviledges) {

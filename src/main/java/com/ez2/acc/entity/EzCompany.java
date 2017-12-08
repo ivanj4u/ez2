@@ -21,24 +21,26 @@ import java.io.Serializable;
 @Entity
 @Table(name = "ez_company", schema = "ez")
 public class EzCompany extends AuditTrail implements Serializable {
-	
+
+	@Id
+	@Column(name = "company_code", unique = true, nullable = false, length = 5)
 	private String companyCode;
+	@Column(name = "company_name", length = 200)
 	private String name;
-	private String alamat;
-	private String kota;
-	private String idKelurahan;
-	private String telp;
+	@Column(name = "phone", length = 20)
+	private String phone;
+	@Column(name = "fax", length = 20)
 	private String fax;
-	private String kodeParent;
+	@Column(name = "email", unique = true, length = 200)
+	private String email;
+	@Column(name = "parent_code", length = 5)
+	private String parentCode;
+	@Column(name = "status", length = 1)
 	private String status;
-	private String rt;
-	private String rw;
 
 	public EzCompany() {
 	}
 
-	@Id
-	@Column(name = "company_code", unique = true, nullable = false, length = 5)
 	public String getCompanyCode() {
 		return companyCode;
 	}
@@ -47,7 +49,6 @@ public class EzCompany extends AuditTrail implements Serializable {
 		this.companyCode = companyCode;
 	}
 
-	@Column(name = "company_name", unique = false, nullable = true, length = 64, scale = 0)
 	public String getName() {
 		return this.name;
 	}
@@ -56,43 +57,14 @@ public class EzCompany extends AuditTrail implements Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "alamat", unique = false, nullable = true, length = 128, scale = 0)
-	public String getAlamat() {
-		return this.alamat;
+	public String getPhone() {
+		return this.phone;
 	}
 
-	public void setAlamat(String alamat) {
-		this.alamat = alamat;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
-	@Column(name = "kota", unique = false, nullable = true, length = 4, scale = 0)
-	public String getKota() {
-		return this.kota;
-	}
-
-	public void setKota(String kota) {
-		this.kota = kota;
-	}
-
-	@Column(name = "id_kelurahan", unique = false, nullable = true, length = 20, scale = 0)
-	public String getIdKelurahan() {
-		return this.idKelurahan;
-	}
-
-	public void setIdKelurahan(String idKelurahan) {
-		this.idKelurahan = idKelurahan;
-	}
-
-	@Column(name = "telp", unique = false, nullable = true, length = 16, scale = 0)
-	public String getTelp() {
-		return this.telp;
-	}
-
-	public void setTelp(String telp) {
-		this.telp = telp;
-	}
-
-	@Column(name = "fax", unique = false, nullable = true, length = 16, scale = 0)
 	public String getFax() {
 		return this.fax;
 	}
@@ -101,40 +73,28 @@ public class EzCompany extends AuditTrail implements Serializable {
 		this.fax = fax;
 	}
 
-	@Column(name = "kd_parent", unique = false, nullable = true, length = 5, scale = 0)
-	public String getKodeParent() {
-		return this.kodeParent;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setKodeParent(String kodeParent) {
-		this.kodeParent = kodeParent;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	@Column(name = "status", unique = false, nullable = true, length = 1, scale = 0)
+	public String getParentCode() {
+		return this.parentCode;
+	}
+
+	public void setParentCode(String parentCode) {
+		this.parentCode = parentCode;
+	}
+
 	public String getStatus() {
 		return this.status;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	@Column(name = "rt", unique = false, nullable = true, length = 3, scale = 0)
-	public String getRt() {
-		return rt;
-	}
-
-	public void setRt(String rt) {
-		this.rt = rt;
-	}
-
-	@Column(name = "rw", unique = false, nullable = true, length = 3, scale = 0)
-	public String getRw() {
-		return rw;
-	}
-
-	public void setRw(String rw) {
-		this.rw = rw;
 	}
 
 }

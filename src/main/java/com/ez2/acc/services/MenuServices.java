@@ -53,7 +53,7 @@ public class MenuServices extends AuditTrailServices {
             } else if (ValidationHelper.validateValueNotNull(parentId)) {
                 list = daoMenu.queryEzMenusByParentIdEquals(parentId);
             } else {
-                list = daoMenu.findAll();
+                list = daoMenu.queryEzMenus();
             }
         } catch (Exception e) {
             e.printStackTrace();

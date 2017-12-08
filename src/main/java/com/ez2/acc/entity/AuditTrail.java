@@ -19,9 +19,9 @@ import java.util.Date;
 @MappedSuperclass
 public class AuditTrail implements Serializable {
 
-    @Column(name = "create_by", length = 20)
+    @Column(name = "create_by")
     private String createBy;
-    @Column(name = "update_by", length = 20)
+    @Column(name = "update_by")
     private String updateBy;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date", length = 29)

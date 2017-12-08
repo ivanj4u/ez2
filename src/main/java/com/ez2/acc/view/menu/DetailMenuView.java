@@ -91,7 +91,7 @@ public class DetailMenuView extends AbstractDetailScreen {
             pojoMenu.setMenuName(txtMenuName.getValue());
             pojoMenu.setParentId(txtParentId.getValue());
             pojoMenu.setHaveChild(cmbHaveChild.getValueItem().toString());
-            pojoMenu.setPosition(Long.parseLong(txtPosition.getValue()));
+            pojoMenu.setNoUrut(Long.parseLong(txtPosition.getValue()));
             if (pojoMenu.getHaveChild().equals("0"))
                 pojoMenu.setMenuClass(txtMenuClass.getValue());
             if (ValidationHelper.validateFieldWithoutWarn(txtMenuParam))
@@ -155,7 +155,7 @@ public class DetailMenuView extends AbstractDetailScreen {
                 txtMenuParam.setValue(pojoMenu.getParam() != null ? pojoMenu.getParam() : "");
                 txtMenuClass.setValue(pojoMenu.getMenuClass() != null ? pojoMenu.getMenuClass() : "");
                 txtParentId.setValue(pojoMenu.getParentId());
-                txtPosition.setValue(String.valueOf(pojoMenu.getPosition()));
+                txtPosition.setValue(String.valueOf(pojoMenu.getNoUrut()));
                 cmbHaveChild.setValueItem(pojoMenu.getHaveChild());
             } else {
                 NotificationHelper.showNotification(Constants.APP_MESSAGE.INFO_DATA_NOT_EXIST);

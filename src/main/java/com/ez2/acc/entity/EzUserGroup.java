@@ -21,8 +21,8 @@ import java.io.Serializable;
 public class EzUserGroup implements Serializable {
 
     @Id
-    @Column(name = "username", length = 20, nullable = false)
-    private String username;
+    @Column(name = "user_id", nullable = false)
+    private String userId;
     @Id
     @Column(name = "group_id", length = 20, nullable = false)
     private long groupId;
@@ -31,12 +31,12 @@ public class EzUserGroup implements Serializable {
 
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public long getGroupId() {

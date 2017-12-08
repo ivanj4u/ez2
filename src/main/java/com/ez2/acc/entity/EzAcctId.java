@@ -12,11 +12,10 @@
 
 package com.ez2.acc.entity;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 
 @Embeddable
 public class EzAcctId implements Serializable {
@@ -32,7 +31,6 @@ public class EzAcctId implements Serializable {
 		this.tgl = tgl;
 	}
 
-	@Column(name = "no_rek", nullable = false, length = 16)
 	public String getNorek() {
 		return this.norek;
 	}
@@ -41,7 +39,6 @@ public class EzAcctId implements Serializable {
 		this.norek = norek;
 	}
 
-	@Column(name = "tgl", nullable = false, length = 13)
 	public Date getTgl() {
 		return this.tgl;
 	}

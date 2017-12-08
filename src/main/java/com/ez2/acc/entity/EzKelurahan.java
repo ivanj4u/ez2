@@ -22,7 +22,7 @@ import java.io.Serializable;
 @Table(name = "ez_kelurahan", schema = "ez")
 public class EzKelurahan extends AuditTrail implements Serializable {
 
-	private String idKelurahan;
+	private String kodeKelurahan;
 	private String namaKelurahan;
 	private String kodePos;
 	private String kodeKecamatan;
@@ -31,13 +31,13 @@ public class EzKelurahan extends AuditTrail implements Serializable {
 	}
 
 	@Id
-	@Column(name = "id_kelurahan", nullable = false, length = 10)
-	public String getIdKelurahan() {
-		return this.idKelurahan;
+	@Column(name = "kode_kelurahan", nullable = false, length = 10)
+	public String getKodeKelurahan() {
+		return this.kodeKelurahan;
 	}
 
-	public void setIdKelurahan(String idKelurahan) {
-		this.idKelurahan = idKelurahan;
+	public void setKodeKelurahan(String kodeKelurahan) {
+		this.kodeKelurahan = kodeKelurahan;
 	}
 	
 	@Id

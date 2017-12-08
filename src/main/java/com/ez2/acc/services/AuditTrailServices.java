@@ -25,7 +25,7 @@ public abstract class AuditTrailServices {
         EzUser user = VaadinSession.getCurrent().getAttribute(EzUser.class);
         Date now = new Date();
         if (user != null) {
-            ((AuditTrail) pojo).setCreateBy(user.getUsername());
+            ((AuditTrail) pojo).setCreateBy(user.getUserId());
         } else {
             ((AuditTrail) pojo).setCreateBy(Constants.APP_USER.SYS_USER);
         }
@@ -37,7 +37,7 @@ public abstract class AuditTrailServices {
         EzUser user = VaadinSession.getCurrent().getAttribute(EzUser.class);
         Date now = new Date();
         if (user != null) {
-            ((AuditTrail) pojo).setUpdateBy(user.getUsername());
+            ((AuditTrail) pojo).setUpdateBy(user.getUserId());
         } else {
             ((AuditTrail) pojo).setUpdateBy(Constants.APP_USER.SYS_USER);
         }

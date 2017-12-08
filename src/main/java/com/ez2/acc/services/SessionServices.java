@@ -36,7 +36,7 @@ public class SessionServices {
             Date now = new Date();
             if (pojo == null) {
                 pojo = new EzSession();
-                pojo.setUsername(username);
+                pojo.setUserId(username);
                 pojo.setCreateBy(username);
                 pojo.setCreateDate(now);
                 pojo.setVersi(now.getTime());

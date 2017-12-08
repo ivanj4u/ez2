@@ -12,8 +12,8 @@
 
 package com.ez2.acc.services;
 
-import com.ez2.acc.dao.UserDao;
-import com.ez2.acc.entity.EzUser;
+import com.ez2.acc.dao.CompanyDao;
+import com.ez2.acc.entity.EzCompany;
 import com.ez2.acc.util.ValidationHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,17 +27,17 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UserServices extends AuditTrailServices {
-    private static final Logger logger = LoggerFactory.getLogger(UserServices.class);
+public class CompanyServices extends AuditTrailServices {
+    private static final Logger logger = LoggerFactory.getLogger(CompanyServices.class);
     @Autowired
-    private UserDao daoUser;
+    private CompanyDao daoCompany;
 
     @Override
     public void save(Object pojo) throws Exception {
-        EzUser user = (EzUser) pojo;
+        EzCompany company = (EzCompany) pojo;
         try {
-            saveAudit(user);
-            daoUser.save(user);
+            saveAudit(company);
+            daoCompany.save(company);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
@@ -46,29 +46,29 @@ public class UserServices extends AuditTrailServices {
 
     @Override
     public void update(Object pojo) throws Exception {
-        EzUser updatedUser = (EzUser) pojo;
+        EzCompany updatedCompany = (EzCompany) pojo;
         try {
-            EzUser user = daoUser.findOne(updatedUser.getUserId());
-            BeanUtils.copyProperties(updatedUser, user);
-            updateAudit(user);
-            daoUser.save(user);
+            EzCompany company = daoCompany.findOne(updatedCompany.getCompanyCode());
+            BeanUtils.copyProperties(updatedCompany, company);
+            updateAudit(company);
+            daoCompany.save(company);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
         }
     }
 
-    public List<EzUser> queryList(String userId, String name) throws Exception {
-        List<EzUser> list = new ArrayList<>();
+    public List<EzCompany> queryList(String companyCode, String name) throws Exception {
+        List<EzCompany> list = new ArrayList<>();
         try {
-            if (ValidationHelper.validateValueNotNull(userId) && ValidationHelper.validateValueNotNull(name)) {
-                list = daoUser.queryEzUsersByUserIdEqualsAndNameIsLike(userId, ("%" + name + "%"));
-            } else if (ValidationHelper.validateValueNotNull(userId)) {
-                list = daoUser.queryEzUsersByUserIdEquals(userId);
+            if (ValidationHelper.validateValueNotNull(companyCode) && ValidationHelper.validateValueNotNull(name)) {
+                list = daoCompany.queryEzCompaniesByCompanyCodeEqualsAndNameLike(companyCode, ("%" + name + "%"));
+            } else if (ValidationHelper.validateValueNotNull(companyCode)) {
+                list = daoCompany.queryEzCompaniesByCompanyCodeEquals(companyCode);
             } else if (ValidationHelper.validateValueNotNull(name)) {
-                list = daoUser.queryEzUsersByNameLike(("%" + name + "%"));
+                list = daoCompany.queryEzCompaniesByNameLike(("%" + name + "%"));
             } else {
-                list = daoUser.findAll();
+                list = daoCompany.findAll();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,15 +77,15 @@ public class UserServices extends AuditTrailServices {
         return list;
     }
 
-    public EzUser getUser(String userId) throws Exception {
-        EzUser user = null;
+    public EzCompany getCompany(String companyCode) throws Exception {
+        EzCompany company = null;
         try {
-            user = daoUser.findOne(userId);
+            company = daoCompany.findOne(companyCode);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
         }
-        return user;
+        return company;
     }
 
 }

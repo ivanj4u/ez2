@@ -29,8 +29,8 @@ public class EzMenu extends AuditTrail implements Serializable {
     private String menuName;
     @Column(name = "menu_class")
     private String menuClass;
-    @Column(name = "position", length = 5)
-    private Long position;
+    @Column(name = "no_urut", length = 5)
+    private Long noUrut;
     @Column(name = "param", length = 200)
     private String param;
     @Column(name = "parent_id", length = 100, nullable = false)
@@ -66,12 +66,12 @@ public class EzMenu extends AuditTrail implements Serializable {
         this.menuClass = menuClass;
     }
 
-    public Long getPosition() {
-        return position;
+    public Long getNoUrut() {
+        return noUrut;
     }
 
-    public void setPosition(Long position) {
-        this.position = position;
+    public void setNoUrut(Long noUrut) {
+        this.noUrut = noUrut;
     }
 
     public String getParam() {

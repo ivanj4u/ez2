@@ -32,7 +32,7 @@ public class DetailUserProfileView extends AbstractDetailScreen {
     @Autowired
     private UserServices servicesUser;
 
-    private TextField txtName, txtEmail, txtPhone;
+    private TextField txtName, txtPhone;
 
     private Logger logger = LoggerFactory.getLogger(DetailUserProfileView.class);
 
@@ -43,7 +43,6 @@ public class DetailUserProfileView extends AbstractDetailScreen {
         try {
             EzUser user = VaadinSession.getCurrent().getAttribute(EzUser.class);
             user.setName(txtName.getValue());
-            user.setEmail(txtEmail.getValue());
             user.setPhone(txtPhone.getValue());
             servicesUser.update(user);
 
@@ -67,7 +66,6 @@ public class DetailUserProfileView extends AbstractDetailScreen {
     @Override
     protected boolean doValidate() {
         if (ValidationHelper.validateRequired(txtName)
-                && ValidationHelper.validateRequired(txtEmail)
                 && ValidationHelper.validateRequired(txtPhone))
             return true;
 
@@ -78,7 +76,6 @@ public class DetailUserProfileView extends AbstractDetailScreen {
     @Override
     protected void doReset() {
         txtName.setValue("");
-        txtEmail.setValue("");
         txtPhone.setValue("");
     }
 
@@ -97,9 +94,6 @@ public class DetailUserProfileView extends AbstractDetailScreen {
         grid.addComponent(lbl, 0, row);
         grid.addComponent(txtName = new TextField(), 1, row++);
 
-        grid.addComponent(new Label("Email"), 0, row);
-        grid.addComponent(txtEmail = new TextField(), 1, row++);
-
         grid.addComponent(new Label("Phone"), 0, row);
         grid.addComponent(txtPhone = new TextField(), 1, row++);
 
@@ -111,7 +105,6 @@ public class DetailUserProfileView extends AbstractDetailScreen {
     public void setModeNew() {
         EzUser user = VaadinSession.getCurrent().getAttribute(EzUser.class);
         txtName.setValue(user.getName());
-        txtEmail.setValue(user.getEmail());
         txtPhone.setValue(user.getPhone());
     }
 

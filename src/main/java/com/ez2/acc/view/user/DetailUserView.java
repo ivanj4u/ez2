@@ -35,7 +35,7 @@ public class DetailUserView extends AbstractDetailScreen {
     private static final Logger logger = LoggerFactory.getLogger(DetailUserView.class);
     @Autowired
     private UserServices servicesUser;
-    private TextField txtUsername, txtName, txtEmail, txtPhone;
+    private TextField txtUsername, txtName, txtPhone;
     private PasswordField txtPassword, txtPasswordConfirm;
     private PopUpDateField txtTglAwal, txtTglAkhir;
     private PopUpComboBox cmbStatus;
@@ -56,9 +56,6 @@ public class DetailUserView extends AbstractDetailScreen {
 
         grid.addComponent(new Label("Nama"), 0, row);
         grid.addComponent(txtName = new TextField(), 1, row, 2, row++);
-
-        grid.addComponent(new Label("Email"), 0, row);
-        grid.addComponent(txtEmail = new TextField(), 1, row, 2, row++);
 
         grid.addComponent(new Label("Phone"), 0, row);
         grid.addComponent(txtPhone = new TextField(), 1, row, 2, row++);
@@ -95,7 +92,6 @@ public class DetailUserView extends AbstractDetailScreen {
         doReset();
         txtUsername.setEnabled(true);
         txtName.setEnabled(true);
-        txtEmail.setEnabled(true);
         txtPhone.setEnabled(true);
         txtPassword.setEnabled(true);
         txtPasswordConfirm.setEnabled(true);
@@ -110,7 +106,6 @@ public class DetailUserView extends AbstractDetailScreen {
     public void setModeUpdate() {
         txtUsername.setEnabled(false);
         txtName.setEnabled(true);
-        txtEmail.setEnabled(true);
         txtPhone.setEnabled(true);
         txtPassword.setEnabled(true);
         txtPasswordConfirm.setEnabled(true);
@@ -125,7 +120,6 @@ public class DetailUserView extends AbstractDetailScreen {
     public void setModeView() {
         txtUsername.setEnabled(false);
         txtName.setEnabled(false);
-        txtEmail.setEnabled(false);
         txtPhone.setEnabled(false);
         txtPassword.setEnabled(false);
         txtPasswordConfirm.setEnabled(false);
@@ -144,14 +138,13 @@ public class DetailUserView extends AbstractDetailScreen {
         try {
             if (getMode() == Constants.APP_MODE.MODE_NEW) {
                 pojoUser = new EzUser();
-                pojoUser.setUsername(txtUsername.getValue());
+                pojoUser.setUserId(txtUsername.getValue());
             } else {
                 if (!doValidateData()) {
                     return;
                 }
             }
             pojoUser.setName(txtName.getValue());
-            pojoUser.setEmail(txtEmail.getValue());
             pojoUser.setPhone(txtPhone.getValue());
             pojoUser.setPassword(txtPassword.getValue());
             pojoUser.setStartTime(txtTglAwal.getValueDate());
@@ -177,10 +170,9 @@ public class DetailUserView extends AbstractDetailScreen {
     @Override
     protected boolean doValidate() {
         if (ValidationHelper.validateRequired(txtUsername) && ValidationHelper.validateRequired(txtName)
-                && ValidationHelper.validateRequired(txtEmail) && ValidationHelper.validateRequired(txtPhone)
-                && ValidationHelper.validateRequired(txtPassword) && ValidationHelper.validateRequired(txtPasswordConfirm)
-                && ValidationHelper.validateRequired(txtTglAwal) && ValidationHelper.validateRequired(txtTglAkhir)
-                && ValidationHelper.validateValueNotNull(cmbStatus.getValue()))
+                && ValidationHelper.validateRequired(txtPhone) && ValidationHelper.validateRequired(txtPassword)
+                && ValidationHelper.validateRequired(txtPasswordConfirm) && ValidationHelper.validateRequired(txtTglAwal)
+                && ValidationHelper.validateRequired(txtTglAkhir) && ValidationHelper.validateValueNotNull(cmbStatus.getValue()))
             return true;
 
         NotificationHelper.showNotification(Constants.APP_MESSAGE.WARN_DATA_MANDATORY);
@@ -200,7 +192,7 @@ public class DetailUserView extends AbstractDetailScreen {
     }
 
     private boolean doValidateData() throws Exception {
-        EzUser userDatabase = servicesUser.getUser(pojoUser.getUsername());
+        EzUser userDatabase = servicesUser.getUser(pojoUser.getUserId());
         if (userDatabase.getVersi() > pojoUser.getVersi()) {
             NotificationHelper.showNotification(Constants.APP_MESSAGE.ERR_DATA_IN_VALID);
             return false;
@@ -212,7 +204,6 @@ public class DetailUserView extends AbstractDetailScreen {
     protected void doReset() {
         txtUsername.setValue("");
         txtName.setValue("");
-        txtEmail.setValue("");
         txtPhone.setValue("");
         txtPassword.setValue("");
         txtPasswordConfirm.setValue("");
@@ -228,9 +219,8 @@ public class DetailUserView extends AbstractDetailScreen {
         try {
             pojoUser = pojo != null ? ((EzUser) pojo) : null;
             if (pojoUser != null) {
-                txtUsername.setValue(pojoUser.getUsername());
+                txtUsername.setValue(pojoUser.getUserId());
                 txtName.setValue(pojoUser.getName());
-                txtEmail.setValue(pojoUser.getEmail());
                 txtPhone.setValue(pojoUser.getPhone());
                 txtPassword.setValue(pojoUser.getPassword());
                 txtPasswordConfirm.setValue(pojoUser.getPassword());

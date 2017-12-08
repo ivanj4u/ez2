@@ -21,41 +21,39 @@ import java.io.Serializable;
 @Entity
 @Table(name = "ez_kabupaten", schema = "ez")
 public class EzKabupaten extends AuditTrail implements Serializable {
+    @Id
+    @Column(name = "kode_kabupaten", nullable = false, length = 4)
+    private String kodeKabupaten;
+    @Column(name = "nama_kabupaten", nullable = false, length = 200)
+    private String namaKabupaten;
+    @Column(name = "kode_provinsi", nullable = false, length = 2)
+    private String kodeProvinsi;
 
-	private String kodeKabupaten;
-	private String namaKabupaten;
-	private String kodeProvinsi;
+    public EzKabupaten() {
+    }
 
-	public EzKabupaten() {
-	}
+    public String getKodeKabupaten() {
+        return this.kodeKabupaten;
+    }
 
-	@Id
-	@Column(name = "kode_kabupaten", nullable = false, length = 4)
-	public String getKodeKabupaten() {
-		return this.kodeKabupaten;
-	}
+    public void setKodeKabupaten(String kodeKabupaten) {
+        this.kodeKabupaten = kodeKabupaten;
+    }
 
-	public void setKodeKabupaten(String kodeKabupaten) {
-		this.kodeKabupaten = kodeKabupaten;
-	}
-	
-	@Id
-	@Column(name = "kode_provinsi", nullable = false, length = 2)
-	public String getKodeProvinsi() {
-		return this.kodeProvinsi;
-	}
+    public String getKodeProvinsi() {
+        return this.kodeProvinsi;
+    }
 
-	public void setKodeProvinsi(String kodeProvinsi) {
-		this.kodeProvinsi = kodeProvinsi;
-	}
+    public void setKodeProvinsi(String kodeProvinsi) {
+        this.kodeProvinsi = kodeProvinsi;
+    }
 
-	@Column(name = "nama_kabupaten", nullable = false, length = 200)
-	public String getNamaKabupaten() {
-		return this.namaKabupaten;
-	}
+    public String getNamaKabupaten() {
+        return this.namaKabupaten;
+    }
 
-	public void setNamaKabupaten(String namaKabupaten) {
-		this.namaKabupaten = namaKabupaten;
-	}
+    public void setNamaKabupaten(String namaKabupaten) {
+        this.namaKabupaten = namaKabupaten;
+    }
 
 }

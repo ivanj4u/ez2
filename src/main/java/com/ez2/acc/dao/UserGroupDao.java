@@ -25,8 +25,8 @@ public interface UserGroupDao extends CrudRepository<EzUserGroup, EzUserGroupId>
 
     List<EzUserGroup> findByGroupId(Long groupId);
 
-    List<EzUserGroup> findByUsername(String username);
+    List<EzUserGroup> findByUserId(String userId);
 
-    List<EzUserGroup> findByGroupIdAndUsername(Long groupId, String username);
+    List<EzUserGroup> findByGroupIdAndUserId(Long groupId, String userId);
 
 }

@@ -20,164 +20,163 @@ import java.util.Date;
 @Table(name = "ez_jurnal", schema = "ez")
 public class EzJurnal extends AuditTrail implements Serializable {
 
-	private long jurnalId;
-	private String kodeTransaksi;
-	private String keterangan;
-	private String isAuthorized;
-	private String authorizedBy;
-	private Date authorizedDate;
-	private String proposedBy;
-	private Date proposedDate;
-	private String companyCode;
-	private String refId;
-	private String reverse;
-	private String respCode;
-	private Date tglTransaksi;
-	private Date tglPosting;
+    @Id
+    @Column(name = "jurnal_id", nullable = false)
+    private long jurnalId;
+    @Column(name = "kode_transaksi", length = 5)
+    private String kodeTransaksi;
+    @Column(name = "keterangan", length = 200)
+    private String keterangan;
+    @Column(name = "proposed_by")
+    private String proposedBy;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "proposed_date", length = 29)
+    private Date proposedDate;
+    @Column(name = "authorized_by")
+    private String authorizedBy;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "authorized_date", length = 29)
+    private Date authorizedDate;
+    @Column(name = "is_authorized", length = 1)
+    private String isAuthorized;
+    @Column(name = "company_code", length = 5)
+    private String companyCode;
+    @Column(name = "ref_id", length = 30)
+    private String refId;
+    @Column(name = "is_reverse", length = 1)
+    private String isReverse;
+    @Column(name = "resp_code", length = 10)
+    private String respCode;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "tgl_transaksi", length = 13)
+    private Date tglTransaksi;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "tgl_posting", length = 13)
+    private Date tglPosting;
 
-	public EzJurnal() {
-	}
+    public EzJurnal() {
+    }
 
-	public EzJurnal(long jurnalId) {
-		this.jurnalId = jurnalId;
-	}
+    public EzJurnal(long jurnalId) {
+        this.jurnalId = jurnalId;
+    }
 
-	public EzJurnal(long nextSequenceOfJurnalId, String transactionCode, Date tglTransaksi, Date tglPosting) {
-		this.jurnalId = nextSequenceOfJurnalId;
-		this.kodeTransaksi = transactionCode;
-		this.tglTransaksi = tglTransaksi;
-		this.tglPosting = tglPosting;
-	}
+    public EzJurnal(long nextSequenceOfJurnalId, String transactionCode, Date tglTransaksi, Date tglPosting) {
+        this.jurnalId = nextSequenceOfJurnalId;
+        this.kodeTransaksi = transactionCode;
+        this.tglTransaksi = tglTransaksi;
+        this.tglPosting = tglPosting;
+    }
 
-	@Id
-	@Column(name = "jurnal_id", nullable = false)
-	public long getJurnalId() {
-		return this.jurnalId;
-	}
+    public long getJurnalId() {
+        return jurnalId;
+    }
 
-	public void setJurnalId(long jurnalId) {
-		this.jurnalId = jurnalId;
-	}
+    public void setJurnalId(long jurnalId) {
+        this.jurnalId = jurnalId;
+    }
 
-	@Column(name = "kode_transaksi", length = 5)
-	public String getKodeTransaksi() {
-		return this.kodeTransaksi;
-	}
+    public String getKodeTransaksi() {
+        return kodeTransaksi;
+    }
 
-	public void setKodeTransaksi(String kodeTransaksi) {
-		this.kodeTransaksi = kodeTransaksi;
-	}
+    public void setKodeTransaksi(String kodeTransaksi) {
+        this.kodeTransaksi = kodeTransaksi;
+    }
 
-	@Column(name = "keterangan", length = 200)
-	public String getKeterangan() {
-		return this.keterangan;
-	}
+    public String getKeterangan() {
+        return keterangan;
+    }
 
-	public void setKeterangan(String keterangan) {
-		this.keterangan = keterangan;
-	}
+    public void setKeterangan(String keterangan) {
+        this.keterangan = keterangan;
+    }
 
-	@Column(name = "is_authorized", length = 1)
-	public String getIsAuthorized() {
-		return this.isAuthorized;
-	}
+    public String getProposedBy() {
+        return proposedBy;
+    }
 
-	public void setIsAuthorized(String isAuthorized) {
-		this.isAuthorized = isAuthorized;
-	}
+    public void setProposedBy(String proposedBy) {
+        this.proposedBy = proposedBy;
+    }
 
-	@Column(name = "authorized_by", length = 10)
-	public String getAuthorizedBy() {
-		return this.authorizedBy;
-	}
+    public Date getProposedDate() {
+        return proposedDate;
+    }
 
-	public void setAuthorizedBy(String authorizedBy) {
-		this.authorizedBy = authorizedBy;
-	}
+    public void setProposedDate(Date proposedDate) {
+        this.proposedDate = proposedDate;
+    }
 
-	@Column(name = "proposed_by", length = 10)
-	public String getProposedBy() {
-		return this.proposedBy;
-	}
+    public String getAuthorizedBy() {
+        return authorizedBy;
+    }
 
-	public void setProposedBy(String proposedBy) {
-		this.proposedBy = proposedBy;
-	}
+    public void setAuthorizedBy(String authorizedBy) {
+        this.authorizedBy = authorizedBy;
+    }
 
-	@Column(name = "company_code", length = 5)
-	public String getCompanyCode() {
-		return this.companyCode;
-	}
+    public Date getAuthorizedDate() {
+        return authorizedDate;
+    }
 
-	public void setCompanyCode(String companyCode) {
-		this.companyCode = companyCode;
-	}
+    public void setAuthorizedDate(Date authorizedDate) {
+        this.authorizedDate = authorizedDate;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "authorized_date", length = 29)
-	public Date getAuthorizedDate() {
-		return this.authorizedDate;
-	}
+    public String getIsAuthorized() {
+        return isAuthorized;
+    }
 
-	public void setAuthorizedDate(Date authorizedDate) {
-		this.authorizedDate = authorizedDate;
-	}
+    public void setIsAuthorized(String isAuthorized) {
+        this.isAuthorized = isAuthorized;
+    }
 
-	@Column(name = "ref_id", length = 30)
-	public String getRefId() {
-		return this.refId;
-	}
+    public String getCompanyCode() {
+        return companyCode;
+    }
 
-	public void setRefId(String refId) {
-		this.refId = refId;
-	}
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
 
-	@Column(name = "is_reverse", length = 1)
-	public String getReverse() {
-		return this.reverse;
-	}
+    public String getRefId() {
+        return refId;
+    }
 
-	public void setReverse(String reverse) {
-		this.reverse = reverse;
-	}
+    public void setRefId(String refId) {
+        this.refId = refId;
+    }
 
-	@Column(name = "resp_code", length = 10)
-	public String getRespCode() {
-		return this.respCode;
-	}
+    public String getIsReverse() {
+        return isReverse;
+    }
 
-	public void setRespCode(String respCode) {
-		this.respCode = respCode;
-	}
+    public void setIsReverse(String isReverse) {
+        this.isReverse = isReverse;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "tgl_transaksi", length = 13)
-	public Date getTglTransaksi() {
-		return this.tglTransaksi;
-	}
+    public String getRespCode() {
+        return respCode;
+    }
 
-	public void setTglTransaksi(Date tglTransaksi) {
-		this.tglTransaksi = tglTransaksi;
-	}
+    public void setRespCode(String respCode) {
+        this.respCode = respCode;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "tgl_posting", length = 13)
-	public Date getTglPosting() {
-		return this.tglPosting;
-	}
+    public Date getTglTransaksi() {
+        return tglTransaksi;
+    }
 
-	public void setTglPosting(Date tglPosting) {
-		this.tglPosting = tglPosting;
-	}
+    public void setTglTransaksi(Date tglTransaksi) {
+        this.tglTransaksi = tglTransaksi;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "proposed_date", length = 29)
-	public Date getProposedDate() {
-		return this.proposedDate;
-	}
+    public Date getTglPosting() {
+        return tglPosting;
+    }
 
-	public void setProposedDate(Date proposedDate) {
-		this.proposedDate = proposedDate;
-	}
-
+    public void setTglPosting(Date tglPosting) {
+        this.tglPosting = tglPosting;
+    }
 }

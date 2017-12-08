@@ -22,34 +22,34 @@ import java.io.Serializable;
 @Table(name = "ez_provinsi", schema = "ez")
 public class EzProvinsi extends AuditTrail implements Serializable {
 
-	private String kodeProvinsi;
-	private String namaProvinsi;
+    @Id
+    @Column(name = "kode_provinsi", nullable = false, length = 2)
+    private String kodeProvinsi;
+    @Column(name = "nama_provinsi", nullable = false, length = 100)
+    private String namaProvinsi;
 
-	public EzProvinsi() {
-	}
+    public EzProvinsi() {
+    }
 
-	public EzProvinsi(String kodeProvinsi, String namaProvinsi) {
-		this.kodeProvinsi = kodeProvinsi;
-		this.namaProvinsi = namaProvinsi;
-	}
+    public EzProvinsi(String kodeProvinsi, String namaProvinsi) {
+        this.kodeProvinsi = kodeProvinsi;
+        this.namaProvinsi = namaProvinsi;
+    }
 
-	@Id
-	@Column(name = "kode_provinsi", nullable = false, length = 2)
-	public String getKodeProvinsi() {
-		return this.kodeProvinsi;
-	}
+    public String getKodeProvinsi() {
+        return this.kodeProvinsi;
+    }
 
-	public void setKodeProvinsi(String kodeProvinsi) {
-		this.kodeProvinsi = kodeProvinsi;
-	}
+    public void setKodeProvinsi(String kodeProvinsi) {
+        this.kodeProvinsi = kodeProvinsi;
+    }
 
-	@Column(name = "nama_provinsi", nullable = false, length = 100)
-	public String getNamaProvinsi() {
-		return this.namaProvinsi;
-	}
+    public String getNamaProvinsi() {
+        return this.namaProvinsi;
+    }
 
-	public void setNamaProvinsi(String namaProvinsi) {
-		this.namaProvinsi = namaProvinsi;
-	}
+    public void setNamaProvinsi(String namaProvinsi) {
+        this.namaProvinsi = namaProvinsi;
+    }
 
 }

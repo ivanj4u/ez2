@@ -21,110 +21,110 @@ import java.util.Date;
 @Table(name = "ez_coa_map", schema = "ez")
 public class EzCoaMap implements Serializable {
 
-	private String noCoa;
-	private String companyCode;
-	private String ccy;
-	private String parentCOA;
-	private BigDecimal mutasiD;
-	private BigDecimal mutasiC;
-	private BigDecimal saldoAwal;
-	private BigDecimal saldoAkhir;
-	private String noCOAMaster;
-	private Date lastUpdate;
-	
-	public EzCoaMap() {
-	}
+    @Id
+    @Column(name = "no_coa", nullable = false, length = 13)
+    private String noCoa;
+    @Column(name = "company_code", length = 5)
+    private String companyCode;
+    @Column(name = "ccy", length = 3)
+    private String ccy;
+    @Column(name = "parent_coa", length = 13)
+    private String parentCOA;
+    @Column(name = "mutasi_d", nullable = false, precision = 20, scale = 2)
+    private BigDecimal mutasiD;
+    @Column(name = "mutasi_c", nullable = false, precision = 20, scale = 2)
+    private BigDecimal mutasiC;
+    @Column(name = "saldo_awal", nullable = false, precision = 20, scale = 2)
+    private BigDecimal saldoAwal;
+    @Column(name = "saldo_akhir", nullable = false, precision = 20, scale = 2)
+    private BigDecimal saldoAkhir;
+    @Column(name = "no_coa_master", length = 5)
+    private String noCOAMaster;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "last_update", length = 7)
+    private Date lastUpdate;
 
-	@Id
-	@Column(name = "no_coa", nullable = false, length = 13)
-	public String getNoCoa() {
-		return this.noCoa;
-	}
+    public EzCoaMap() {
+    }
 
-	public void setNoCoa(String noCoa) {
-		this.noCoa = noCoa;
-	}
+    public String getNoCoa() {
+        return this.noCoa;
+    }
 
-	@Column(name = "company_code", length = 5)
-	public String getCompanyCode() {
-		return companyCode;
-	}
+    public void setNoCoa(String noCoa) {
+        this.noCoa = noCoa;
+    }
 
-	public void setCompanyCode(String companyCode) {
-		this.companyCode = companyCode;
-	}
+    public String getCompanyCode() {
+        return companyCode;
+    }
 
-	@Column(name = "ccy", length = 3)
-	public String getCcy() {
-		return this.ccy;
-	}
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
 
-	public void setCcy(String ccy) {
-		this.ccy = ccy;
-	}
+    public String getCcy() {
+        return this.ccy;
+    }
 
-	@Column(name = "parent_coa", length = 13)
-	public String getParentCOA() {
-		return this.parentCOA;
-	}
+    public void setCcy(String ccy) {
+        this.ccy = ccy;
+    }
 
-	public void setParentCOA(String parentCOA) {
-		this.parentCOA = parentCOA;
-	}
+    public String getParentCOA() {
+        return this.parentCOA;
+    }
 
-	@Column(name = "mutasi_d", nullable = false, precision = 20,scale=2)
-	public BigDecimal getMutasiD() {
-		return this.mutasiD;
-	}
+    public void setParentCOA(String parentCOA) {
+        this.parentCOA = parentCOA;
+    }
 
-	public void setMutasiD(BigDecimal mutasiD) {
-		this.mutasiD = mutasiD;
-	}
+    public BigDecimal getMutasiD() {
+        return this.mutasiD;
+    }
 
-	@Column(name = "mutasi_c", nullable = false, precision = 20,scale=2)
-	public BigDecimal getMutasiC() {
-		return this.mutasiC;
-	}
+    public void setMutasiD(BigDecimal mutasiD) {
+        this.mutasiD = mutasiD;
+    }
 
-	public void setMutasiC(BigDecimal mutasiC) {
-		this.mutasiC = mutasiC;
-	}
+    public BigDecimal getMutasiC() {
+        return this.mutasiC;
+    }
 
-	@Column(name = "saldo_awal", nullable = false, precision = 20,scale=2)
-	public BigDecimal getSaldoAwal() {
-		return this.saldoAwal;
-	}
+    public void setMutasiC(BigDecimal mutasiC) {
+        this.mutasiC = mutasiC;
+    }
 
-	public void setSaldoAwal(BigDecimal saldoAwal) {
-		this.saldoAwal = saldoAwal;
-	}
+    public BigDecimal getSaldoAwal() {
+        return this.saldoAwal;
+    }
 
-	@Column(name = "saldo_akhir", nullable = false, precision = 20,scale=2)
-	public BigDecimal getSaldoAkhir() {
-		return this.saldoAkhir;
-	}
+    public void setSaldoAwal(BigDecimal saldoAwal) {
+        this.saldoAwal = saldoAwal;
+    }
 
-	public void setSaldoAkhir(BigDecimal saldoAkhir) {
-		this.saldoAkhir = saldoAkhir;
-	}
-	
-	@Column(name = "no_coa_master", length = 5)
-	public String getNoCOAMaster() {
-		return this.noCOAMaster;
-	}
+    public BigDecimal getSaldoAkhir() {
+        return this.saldoAkhir;
+    }
 
-	public void setNoCOAMaster(String noCOAMaster) {
-		this.noCOAMaster = noCOAMaster;
-	}
-	
-	@Temporal(TemporalType.DATE)
-	@Column(name = "last_update", length = 7)
-	public Date getLastUpdate() {
-		return lastUpdate;
-	}
-	
-	public void setLastUpdate(Date lastUpdate) {
-		this.lastUpdate = lastUpdate;
-	}
+    public void setSaldoAkhir(BigDecimal saldoAkhir) {
+        this.saldoAkhir = saldoAkhir;
+    }
+
+    public String getNoCOAMaster() {
+        return this.noCOAMaster;
+    }
+
+    public void setNoCOAMaster(String noCOAMaster) {
+        this.noCOAMaster = noCOAMaster;
+    }
+
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 
 }

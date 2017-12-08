@@ -32,8 +32,11 @@ public interface MenuDao extends CrudRepository<EzMenu, String> {
 
     List<EzMenu> queryEzMenusByParentIdEquals(String parentId);
 
+    @Query(value = "select menu from EzMenu menu order by menu.menuId asc")
+    List<EzMenu> queryEzMenus();
+
     @Override
-    @Query(value = "select menu from EzMenu menu order by menu.parentId asc , menu.position asc")
+    @Query(value = "select menu from EzMenu menu order by menu.parentId asc , menu.noUrut asc")
     List<EzMenu> findAll();
 
 }

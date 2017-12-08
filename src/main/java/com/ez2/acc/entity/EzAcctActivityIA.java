@@ -22,12 +22,21 @@ import java.util.Date;
 @IdClass(EzAcctId.class)
 public class EzAcctActivityIA implements Serializable {
 
+	@Id
+	@Column(name = "no_rek", nullable = false, length = 16)
 	private String norek;
+	@Id
+	@Column(name = "tgl", nullable = false, length = 13)
 	private Date tgl;
+	@Column(name = "no_coa", length = 13)
 	private String noCOA;
+	@Column(name = "saldo_awal", nullable = false, precision = 20, scale = 2)
 	private BigDecimal saldoAwal;
+	@Column(name = "mutasi_d", precision = 20, scale = 2)
 	private BigDecimal mutasiD;
+	@Column(name = "mutasi_k", precision = 20, scale = 2)
 	private BigDecimal mutasiK;
+	@Column(name = "saldo_akhir", nullable = false, precision = 20, scale = 2)
 	private BigDecimal saldoAkhir;
 
 	public EzAcctActivityIA() {
@@ -42,53 +51,6 @@ public class EzAcctActivityIA implements Serializable {
 		this.saldoAkhir = saldoAkhir;
 	}
 
-	@Column(name = "no_coa", length = 13)
-	public String getNoCOA() {
-		return this.noCOA;
-	}
-
-	public void setNoCOA(String noCOA) {
-		this.noCOA = noCOA;
-	}
-
-	@Column(name = "saldo_awal", nullable = false, precision = 20,scale=2)
-	public BigDecimal getSaldoAwal() {
-		return this.saldoAwal;
-	}
-
-	public void setSaldoAwal(BigDecimal saldoAwal) {
-		this.saldoAwal = saldoAwal;
-	}
-
-	@Column(name = "mutasi_d", precision = 20,scale=2)
-	public BigDecimal getMutasiD() {
-		return this.mutasiD;
-	}
-
-	public void setMutasiD(BigDecimal mutasiD) {
-		this.mutasiD = mutasiD;
-	}
-
-	@Column(name = "mutasi_k", precision = 20,scale=2)
-	public BigDecimal getMutasiK() {
-		return this.mutasiK;
-	}
-
-	public void setMutasiK(BigDecimal mutasiK) {
-		this.mutasiK = mutasiK;
-	}
-
-	@Column(name = "saldo_akhir", nullable = false, precision = 20,scale =2)
-	public BigDecimal getSaldoAkhir() {
-		return this.saldoAkhir;
-	}
-
-	public void setSaldoAkhir(BigDecimal saldoAkhir) {
-		this.saldoAkhir = saldoAkhir;
-	}
-	
-	@Id
-	@Column(name = "no_rek", nullable = false, length = 16)
 	public String getNorek() {
 		return this.norek;
 	}
@@ -97,8 +59,6 @@ public class EzAcctActivityIA implements Serializable {
 		this.norek = norek;
 	}
 
-	@Id
-	@Column(name = "tgl", nullable = false, length = 13)
 	public Date getTgl() {
 		return this.tgl;
 	}
@@ -106,4 +66,45 @@ public class EzAcctActivityIA implements Serializable {
 	public void setTgl(Date tgl) {
 		this.tgl = tgl;
 	}
+
+	public String getNoCOA() {
+		return this.noCOA;
+	}
+
+	public void setNoCOA(String noCOA) {
+		this.noCOA = noCOA;
+	}
+
+	public BigDecimal getSaldoAwal() {
+		return this.saldoAwal;
+	}
+
+	public void setSaldoAwal(BigDecimal saldoAwal) {
+		this.saldoAwal = saldoAwal;
+	}
+
+	public BigDecimal getMutasiD() {
+		return this.mutasiD;
+	}
+
+	public void setMutasiD(BigDecimal mutasiD) {
+		this.mutasiD = mutasiD;
+	}
+
+	public BigDecimal getMutasiK() {
+		return this.mutasiK;
+	}
+
+	public void setMutasiK(BigDecimal mutasiK) {
+		this.mutasiK = mutasiK;
+	}
+
+	public BigDecimal getSaldoAkhir() {
+		return this.saldoAkhir;
+	}
+
+	public void setSaldoAkhir(BigDecimal saldoAkhir) {
+		this.saldoAkhir = saldoAkhir;
+	}
+	
 }

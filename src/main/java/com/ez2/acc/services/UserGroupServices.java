@@ -55,11 +55,11 @@ public class UserGroupServices {
         return list;
     }
 
-    public List<EzUserGroup> getUserGroupByUsername(String username) throws Exception {
+    public List<EzUserGroup> getUserGroupByUser(String userId) throws Exception {
         List<EzUserGroup> list = new ArrayList<>();
         try {
-            if (ValidationHelper.validateValueNotNull(username)) {
-                list = daoUserGroup.findByUsername(username);
+            if (ValidationHelper.validateValueNotNull(userId)) {
+                list = daoUserGroup.findByUserId(userId);
             } else {
                 list = daoUserGroup.findAll();
             }
@@ -70,13 +70,13 @@ public class UserGroupServices {
         return list;
     }
 
-    public List<EzUserGroup> getUserGroup(String groupId, String username) throws Exception {
+    public List<EzUserGroup> getUserGroup(String groupId, String userId) throws Exception {
         List<EzUserGroup> list = new ArrayList<>();
         try {
-            if (ValidationHelper.validateValueNotNull(username) && ValidationHelper.validateValueNotNull(groupId)) {
-                list = daoUserGroup.findByGroupIdAndUsername(new Long(groupId), username);
-            } else if (ValidationHelper.validateValueNotNull(username)) {
-                list = daoUserGroup.findByUsername(username);
+            if (ValidationHelper.validateValueNotNull(userId) && ValidationHelper.validateValueNotNull(groupId)) {
+                list = daoUserGroup.findByGroupIdAndUserId(new Long(groupId), userId);
+            } else if (ValidationHelper.validateValueNotNull(userId)) {
+                list = daoUserGroup.findByUserId(userId);
             } else if (ValidationHelper.validateValueNotNull(groupId)) {
                 list = daoUserGroup.findByGroupId(new Long(groupId));
             } else {
@@ -89,12 +89,12 @@ public class UserGroupServices {
         return list;
     }
 
-    public List<JoinUserGroup> queryList(String groupId, String username) throws Exception {
+    public List<JoinUserGroup> queryList(String groupId, String userId) throws Exception {
         List<JoinUserGroup> list = new ArrayList<>();
         try {
-            List<EzUserGroup> userGroups = getUserGroup(groupId, username);
+            List<EzUserGroup> userGroups = getUserGroup(groupId, userId);
             for (EzUserGroup userGroup : userGroups) {
-                EzUser user = daoUser.findOne(userGroup.getUsername());
+                EzUser user = daoUser.findOne(userGroup.getUserId());
                 EzGroup group = daoGroup.findOne(userGroup.getGroupId());
                 list.add(new JoinUserGroup(group, user, userGroup));
             }

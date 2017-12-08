@@ -47,7 +47,7 @@ public class DetailUserGroupView extends AbstractDetailScreen {
     private UserServices servicesUser;
     @Autowired
     private GroupServices servicesGroup;
-    private TextField txtUsername, txtName;
+    private TextField txtUserId, txtName;
     private List<EzUserGroup> listUserGroup;
     private Hashtable<Object, ItemComponent> hItem;
     private TwinColSelect<ItemComponent> selectGroup;
@@ -64,18 +64,18 @@ public class DetailUserGroupView extends AbstractDetailScreen {
         Label lbl = new Label("Id Pengguna");
         lbl.setWidth("155px");
         grid.addComponent(lbl, 0, row);
-        grid.addComponent(txtUsername = new TextField(), 1, row++);
+        grid.addComponent(txtUserId = new TextField(), 1, row++);
         FieldShortcutListener listener = new FieldShortcutListener() {
             @Override
             public void onEnterKeyPressed() {
-                if (ValidationHelper.validateFieldWithoutWarn(txtUsername)) {
-                    doSearchUser(txtUsername.getValue());
+                if (ValidationHelper.validateFieldWithoutWarn(txtUserId)) {
+                    doSearchUser(txtUserId.getValue());
                 }
             }
         };
-        listener.install(txtUsername);
+        listener.install(txtUserId);
 
-        txtUsername.addValueChangeListener(event -> {
+        txtUserId.addValueChangeListener(event -> {
             doResetUser();
         });
 
@@ -111,9 +111,9 @@ public class DetailUserGroupView extends AbstractDetailScreen {
         }
     }
 
-    private void doSearchUser(String username) {
+    private void doSearchUser(String userId) {
         try {
-            pojoUser = servicesUser.getUser(username);
+            pojoUser = servicesUser.getUser(userId);
             if (pojoUser != null) {
                 txtName.setValue(pojoUser.getName());
             } else {
@@ -128,7 +128,7 @@ public class DetailUserGroupView extends AbstractDetailScreen {
     @Override
     public void setModeNew() {
         doReset();
-        txtUsername.setEnabled(true);
+        txtUserId.setEnabled(true);
         selectGroup.setEnabled(true);
 
         btnSave.setVisible(true);
@@ -136,7 +136,7 @@ public class DetailUserGroupView extends AbstractDetailScreen {
 
     @Override
     public void setModeUpdate() {
-        txtUsername.setEnabled(false);
+        txtUserId.setEnabled(false);
         selectGroup.setEnabled(true);
 
         btnSave.setVisible(true);
@@ -144,7 +144,7 @@ public class DetailUserGroupView extends AbstractDetailScreen {
 
     @Override
     public void setModeView() {
-        txtUsername.setEnabled(false);
+        txtUserId.setEnabled(false);
         selectGroup.setEnabled(false);
 
         btnSave.setVisible(false);
@@ -167,7 +167,7 @@ public class DetailUserGroupView extends AbstractDetailScreen {
             for (ItemComponent itemComponent : set) {
                 EzUserGroup userGroup = new EzUserGroup();
                 userGroup.setGroupId((Long) itemComponent.getValue());
-                userGroup.setUsername(txtUsername.getValue());
+                userGroup.setUserId(txtUserId.getValue());
                 servicesUserGroup.save(userGroup);
             }
             if (getMode() == Constants.APP_MODE.MODE_NEW)
@@ -185,7 +185,7 @@ public class DetailUserGroupView extends AbstractDetailScreen {
 
     @Override
     protected boolean doValidate() {
-        if (ValidationHelper.validateRequired(txtUsername) && ValidationHelper.validateRequired(txtName))
+        if (ValidationHelper.validateRequired(txtUserId) && ValidationHelper.validateRequired(txtName))
             return true;
 
         NotificationHelper.showNotification(Constants.APP_MESSAGE.WARN_DATA_MANDATORY);
@@ -202,7 +202,7 @@ public class DetailUserGroupView extends AbstractDetailScreen {
 
     @Override
     protected void doReset() {
-        txtUsername.setValue("");
+        txtUserId.setValue("");
         selectGroup.deselectAll();
         doResetUser();
     }
@@ -218,9 +218,9 @@ public class DetailUserGroupView extends AbstractDetailScreen {
         try {
             JoinUserGroup join = pojo != null ? ((JoinUserGroup) pojo) : null;
             if (join != null) {
-                listUserGroup = servicesUserGroup.getUserGroupByUsername(join.getUserGroup_username());
-                txtUsername.setValue(join.getUserGroup_username());
-                doSearchUser(join.getUserGroup_username());
+                listUserGroup = servicesUserGroup.getUserGroupByUser(join.getUserGroup_userId());
+                txtUserId.setValue(join.getUserGroup_userId());
+                doSearchUser(join.getUserGroup_userId());
                 for (EzUserGroup userGroup : listUserGroup
                         ) {
                     selectGroup.select(hItem.get(userGroup.getGroupId()));

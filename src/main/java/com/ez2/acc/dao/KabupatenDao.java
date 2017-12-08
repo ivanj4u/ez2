@@ -12,20 +12,18 @@
 
 package com.ez2.acc.dao;
 
-import com.ez2.acc.entity.EzUser;
+import com.ez2.acc.entity.EzKabupaten;
+import com.querydsl.core.types.Predicate;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface UserDao extends CrudRepository<EzUser, String> {
+public interface KabupatenDao extends CrudRepository<EzKabupaten, String>, QueryDslPredicateExecutor<EzKabupaten> {
 
     @Override
-    List<EzUser> findAll();
+    List<EzKabupaten> findAll();
 
-    List<EzUser> queryEzUsersByNameLike(String name);
-
-    List<EzUser> queryEzUsersByUserIdEquals(String userId);
-
-    List<EzUser> queryEzUsersByUserIdEqualsAndNameIsLike(String userId, String name);
-
+    @Override
+    List<EzKabupaten> findAll(Predicate predicate);
 }

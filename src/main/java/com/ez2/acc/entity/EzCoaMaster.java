@@ -22,10 +22,16 @@ import java.io.Serializable;
 @Table(name = "ez_coa_master", schema = "ez")
 public class EzCoaMaster extends AuditTrail implements Serializable {
 
+	@Id
+	@Column(name = "no_coa", nullable = false, length = 5)
 	private String noCoa;
+	@Column(name = "description", length = 200)
 	private String description;
+	@Column(name = "lvl")
 	private int lvl;
+	@Column(name = "parent_coa", length = 5)
 	private String parentCoa;
+	@Column(name = "groups", length = 1)
 	private String groups;
 
 	public EzCoaMaster() {
@@ -43,8 +49,6 @@ public class EzCoaMaster extends AuditTrail implements Serializable {
 		this.groups = groups;
 	}
 
-	@Id
-	@Column(name = "no_coa", nullable = false, length = 5)
 	public String getNoCoa() {
 		return this.noCoa;
 	}
@@ -53,7 +57,6 @@ public class EzCoaMaster extends AuditTrail implements Serializable {
 		this.noCoa = noCoa;
 	}
 
-	@Column(name = "description", length = 200)
 	public String getDescription() {
 		return this.description;
 	}
@@ -62,7 +65,6 @@ public class EzCoaMaster extends AuditTrail implements Serializable {
 		this.description = description;
 	}
 
-	@Column(name = "lvl")
 	public int getLvl() {
 		return this.lvl;
 	}
@@ -71,7 +73,6 @@ public class EzCoaMaster extends AuditTrail implements Serializable {
 		this.lvl = lvl;
 	}
 
-	@Column(name = "parent_coa", length = 5)
 	public String getParentCoa() {
 		return this.parentCoa;
 	}
@@ -80,7 +81,6 @@ public class EzCoaMaster extends AuditTrail implements Serializable {
 		this.parentCoa = parentCoa;
 	}
 
-	@Column(name = "groups", length = 1)
 	public String getGroups() {
 		return this.groups;
 	}

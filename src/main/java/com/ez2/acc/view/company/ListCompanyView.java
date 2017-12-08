@@ -10,14 +10,14 @@
  * Inc. All Rights Reserved. Terms of Use, Privacy and Trademark Guidelines
  */
 
-package com.ez2.acc.view.user;
+package com.ez2.acc.view.company;
 
-import com.ez2.acc.container.JoinUserGroup;
+import com.ez2.acc.entity.EzCompany;
 import com.ez2.acc.framework.component.NotificationHelper;
 import com.ez2.acc.framework.constants.Constants;
 import com.ez2.acc.framework.impl.AbstractDetailScreen;
 import com.ez2.acc.framework.impl.AbstractSearchScreen;
-import com.ez2.acc.services.UserGroupServices;
+import com.ez2.acc.services.CompanyServices;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
@@ -35,20 +35,22 @@ import java.util.List;
 
 @UIScope
 @SpringView
-public class ListUserGroupView extends AbstractSearchScreen implements View {
-    private static final Logger logger = LoggerFactory.getLogger(ListUserGroupView.class);
-    private final String GROUP_ID = "Id Group";
-    private final String GROUP_NAME = "Nama Group";
-    private final String USERNAME = "Id Pengguna";
-    private final String NAME = "Nama Pengguna";
+public class ListCompanyView extends AbstractSearchScreen implements View {
+    private static final Logger logger = LoggerFactory.getLogger(ListCompanyView.class);
+    private final String COMPANY_CODE = "Id Perusahaan";
+    private final String COMPANY_NAME = "Nama Perusahaan";
+    private final String TELP = "No Telp";
+    private final String EMAIL = "Email";
+    private final String FAX = "Fax";
+    private final String PARENT_ID = "Id Parent";
     @Autowired
-    private UserGroupServices servicesUserGroup;
+    private CompanyServices servicesCompany;
     @Autowired
     private ApplicationContext applicationContext;
-    private TextField txtGroupId, txtUsername;
+    private TextField txtCompanyCode, txtName;
     private AbstractDetailScreen detailScreen;
-    private List<JoinUserGroup> list;
-    private Grid<JoinUserGroup> table;
+    private List<EzCompany> list;
+    private Grid<EzCompany> table;
 
     @Override
     protected int getGridColumn() {
@@ -62,12 +64,12 @@ public class ListUserGroupView extends AbstractSearchScreen implements View {
 
     @Override
     protected void initGridComponent() {
-        Label lbl = new Label("Id Group");
-        lbl.setWidth("100px");
+        Label lbl = new Label("Id Perusahaan");
+        lbl.setWidth("145px");
         grid.addComponent(lbl, 0, row);
-        grid.addComponent(txtGroupId = new TextField(), 1, row++);
-        grid.addComponent(new Label("Id Pengguna"), 0, row);
-        grid.addComponent(txtUsername = new TextField(), 1, row++);
+        grid.addComponent(txtCompanyCode = new TextField(), 1, row++);
+        grid.addComponent(new Label("Nama Perusahaan"), 0, row);
+        grid.addComponent(txtName = new TextField(), 1, row++);
     }
 
     @Override
@@ -78,18 +80,20 @@ public class ListUserGroupView extends AbstractSearchScreen implements View {
     @Override
     protected void initTableData() {
         list = new ArrayList<>();
-        table = (Grid<JoinUserGroup>) initTable();
-        table.addColumn(JoinUserGroup::getGroup_groupId).setCaption(GROUP_ID);
-        table.addColumn(JoinUserGroup::getGroup_groupName).setCaption(GROUP_NAME);
-        table.addColumn(JoinUserGroup::getUser_userId).setCaption(USERNAME);
-        table.addColumn(JoinUserGroup::getUser_name).setCaption(NAME);
+        table = (Grid<EzCompany>) initTable();
+        table.addColumn(EzCompany::getCompanyCode).setCaption(COMPANY_CODE);
+        table.addColumn(EzCompany::getName).setCaption(COMPANY_NAME);
+        table.addColumn(EzCompany::getPhone).setCaption(TELP);
+        table.addColumn(EzCompany::getEmail).setCaption(EMAIL);
+        table.addColumn(EzCompany::getFax).setCaption(FAX);
+        table.addColumn(EzCompany::getParentCode).setCaption(PARENT_ID);
     }
 
     @Override
     protected AbstractDetailScreen getDetailScreen() {
         if (detailScreen == null) {
             try {
-                detailScreen = applicationContext.getBean(DetailUserGroupView.class);
+                detailScreen = applicationContext.getBean(DetailCompanyView.class);
                 detailScreen.setListener(this);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -102,7 +106,7 @@ public class ListUserGroupView extends AbstractSearchScreen implements View {
 
     @Override
     protected String getDetailScreenTitle() {
-        return "Parameter User Group";
+        return "Pendaftaran Perusahaan";
     }
 
     @Override
@@ -118,7 +122,7 @@ public class ListUserGroupView extends AbstractSearchScreen implements View {
     @Override
     protected void doSearch() {
         try {
-            list = servicesUserGroup.queryList(txtGroupId.getValue(), txtUsername.getValue());
+            list = servicesCompany.queryList(txtCompanyCode.getValue(), txtName.getValue());
             table.setItems(list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -128,9 +132,34 @@ public class ListUserGroupView extends AbstractSearchScreen implements View {
     }
 
     @Override
+    public void onAfterAdded(Object pojo) {
+        super.onAfterAdded(pojo);
+        if (pojo != null) {
+            list.add((EzCompany) pojo);
+            table.setItems(list);
+        }
+    }
+
+    @Override
+    public void onAfterUpdated(Object pojo) {
+        super.onAfterUpdated(pojo);
+        if (pojo != null) {
+            EzCompany companyBaru = (EzCompany) pojo;
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getCompanyCode().equals(companyBaru.getCompanyCode())) {
+                    list.remove(i);
+                    list.add(companyBaru);
+                    break;
+                }
+            }
+            table.setItems(list);
+        }
+    }
+
+    @Override
     protected void doReset() {
-        txtGroupId.setValue("");
-        txtUsername.setValue("");
+        txtCompanyCode.setValue("");
+        txtName.setValue("");
         list.clear();
         table.setItems(list);
     }

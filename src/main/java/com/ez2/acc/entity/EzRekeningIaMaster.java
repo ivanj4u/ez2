@@ -22,61 +22,60 @@ import java.io.Serializable;
 @Table(name = "ez_rekening_ia_master", schema = "ez")
 public class EzRekeningIaMaster extends AuditTrail implements Serializable {
 
-	private String noRek;
-	private String noCoa;
-	private String description;
-	private String saldoNormal;
+    @Id
+    @Column(name = "no_rek", nullable = false, length = 7)
+    private String noRek;
+    @Column(name = "no_coa", length = 5)
+    private String noCoa;
+    @Column(name = "description", length = 200)
+    private String description;
+    @Column(name = "saldo_normal", length = 1)
+    private String saldoNormal;
 
-	public EzRekeningIaMaster() {
-	}
+    public EzRekeningIaMaster() {
+    }
 
-	public EzRekeningIaMaster(String noRek) {
-		this.noRek = noRek;
-	}
+    public EzRekeningIaMaster(String noRek) {
+        this.noRek = noRek;
+    }
 
-	public EzRekeningIaMaster(String noRek, String noCoa, String description,
-			String saldoNormal) {
-		this.noRek = noRek;
-		this.noCoa = noCoa;
-		this.description = description;
-		this.saldoNormal = saldoNormal;
-	}
+    public EzRekeningIaMaster(String noRek, String noCoa, String description, String saldoNormal) {
+        this.noRek = noRek;
+        this.noCoa = noCoa;
+        this.description = description;
+        this.saldoNormal = saldoNormal;
+    }
 
-	@Id
-	@Column(name = "no_rek", nullable = false, length = 7)
-	public String getNoRek() {
-		return this.noRek;
-	}
+    public String getNoRek() {
+        return this.noRek;
+    }
 
-	public void setNoRek(String noRek) {
-		this.noRek = noRek;
-	}
+    public void setNoRek(String noRek) {
+        this.noRek = noRek;
+    }
 
-	@Column(name = "no_coa", length = 5)
-	public String getNoCoa() {
-		return this.noCoa;
-	}
+    public String getNoCoa() {
+        return this.noCoa;
+    }
 
-	public void setNoCoa(String noCoa) {
-		this.noCoa = noCoa;
-	}
+    public void setNoCoa(String noCoa) {
+        this.noCoa = noCoa;
+    }
 
-	@Column(name = "description", length = 200)
-	public String getDescription() {
-		return this.description;
-	}
+    public String getDescription() {
+        return this.description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	@Column(name = "saldo_normal", length = 1)
-	public String getSaldoNormal() {
-		return this.saldoNormal;
-	}
+    public String getSaldoNormal() {
+        return this.saldoNormal;
+    }
 
-	public void setSaldoNormal(String saldoNormal) {
-		this.saldoNormal = saldoNormal;
-	}
+    public void setSaldoNormal(String saldoNormal) {
+        this.saldoNormal = saldoNormal;
+    }
 
 }

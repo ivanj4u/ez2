@@ -21,14 +21,14 @@ import java.util.Date;
 public class EzUser extends AuditTrail implements Serializable {
 
     @Id
-    @Column(name = "username", length = 20, nullable = false)
-    private String username;
+    @Column(name = "user_id", nullable = false)
+    private String userId;
+    @Column(name = "company_code", nullable = false, length = 5)
+    private String companyCode;
     @Column(name = "password", length = 50)
     private String password;
-    @Column(name = "name", length = 200)
+    @Column(name = "user_name", length = 200)
     private String name;
-    @Column(name = "email", length = 100)
-    private String email;
     @Column(name = "phone", length = 20)
     private String phone;
     @Column(name = "image")
@@ -56,12 +56,20 @@ public class EzUser extends AuditTrail implements Serializable {
     public EzUser() {
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
     }
 
     public String getPassword() {
@@ -78,14 +86,6 @@ public class EzUser extends AuditTrail implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPhone() {
