@@ -14,7 +14,7 @@ package com.ez2.acc.services;
 
 import com.ez2.acc.dao.MenuDao;
 import com.ez2.acc.entity.EzMenu;
-import com.ez2.acc.util.ValidationHelper;
+import com.querydsl.core.types.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -32,28 +32,13 @@ public class MenuServices extends AuditTrailServices {
     @Autowired
     private MenuDao daoMenu;
 
-    public List<EzMenu> queryList(String menuId, String menuName, String parentId) {
+    public List<EzMenu> queryList(Predicate predicate) {
         List<EzMenu> list = new ArrayList<>();
         try {
-            if (ValidationHelper.validateValueNotNull(menuId) && ValidationHelper.validateValueNotNull(menuName)
-                    && ValidationHelper.validateValueNotNull(parentId)) {
-                list = daoMenu.queryEzMenusByMenuIdEqualsAndMenuNameLikeAndParentIdEquals(menuId, ("%" + menuName + "%"), parentId);
-            } else if (ValidationHelper.validateValueNotNull(menuId) && ValidationHelper.validateValueNotNull(menuName)) {
-                list = daoMenu.queryEzMenusByMenuIdEqualsAndMenuNameLike(menuId, ("%" + menuName + "%"));
-            } else if (ValidationHelper.validateValueNotNull(menuId) && ValidationHelper.validateValueNotNull(parentId)) {
-                list = daoMenu.queryEzMenusByMenuIdEqualsAndParentIdEquals(menuId, parentId);
-            } else if (ValidationHelper.validateValueNotNull(menuName) && ValidationHelper.validateValueNotNull(parentId)) {
-                list = daoMenu.queryEzMenusByMenuNameLikeAndParentIdEquals(("%" + menuName + "%"), parentId);
-            } else if (ValidationHelper.validateValueNotNull(menuId)) {
-                EzMenu menu = daoMenu.findOne(menuId);
-                if (menu != null)
-                    list.add(menu);
-            } else if (ValidationHelper.validateValueNotNull(menuName)) {
-                list = daoMenu.queryEzMenusByMenuNameLike(("%" + menuName + "%"));
-            } else if (ValidationHelper.validateValueNotNull(parentId)) {
-                list = daoMenu.queryEzMenusByParentIdEquals(parentId);
+            if (predicate != null) {
+                list = daoMenu.findAll(predicate);
             } else {
-                list = daoMenu.queryEzMenus();
+                list = daoMenu.findAll();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,9 +69,8 @@ public class MenuServices extends AuditTrailServices {
         return list;
     }
 
-
     @Override
-    public void save(Object pojo) throws Exception {
+    public void save(Object pojo) {
         EzMenu menu = (EzMenu) pojo;
         try {
             saveAudit(menu);
@@ -98,7 +82,7 @@ public class MenuServices extends AuditTrailServices {
     }
 
     @Override
-    public void update(Object pojo) throws Exception {
+    public void update(Object pojo) {
         EzMenu updatedMenu = (EzMenu) pojo;
         try {
             EzMenu menu = daoMenu.findOne(updatedMenu.getMenuId());

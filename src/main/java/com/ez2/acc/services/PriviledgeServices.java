@@ -30,7 +30,7 @@ public class PriviledgeServices {
     @Autowired
     private PriviledgeDao daoPriviledge;
 
-    public List<EzPriviledge> getGroupPriviledge(String groupId) throws Exception {
+    public List<EzPriviledge> getGroupPriviledge(String groupId) {
         List<EzPriviledge> list = new ArrayList<>();
         try {
             list = daoPriviledge.findByGroupId(new Long(groupId));
@@ -41,7 +41,7 @@ public class PriviledgeServices {
         return list;
     }
 
-    public EzPriviledge getMenuPriviledge(String menuId, Long groupId) throws Exception {
+    public EzPriviledge getMenuPriviledge(String menuId, Long groupId) {
         EzPriviledge priviledge = null;
         try {
             priviledge = daoPriviledge.findByMenuIdAndGroupId(menuId, groupId);
@@ -52,7 +52,7 @@ public class PriviledgeServices {
         return priviledge;
     }
 
-    public void save(EzPriviledge priviledge) throws Exception {
+    public void save(EzPriviledge priviledge) {
         try {
             daoPriviledge.save(priviledge);
         } catch (Exception e) {
@@ -61,7 +61,7 @@ public class PriviledgeServices {
         }
     }
 
-    public void deletePriviledgeGroup(Long groupId) throws Exception {
+    public void deletePriviledgeGroup(Long groupId) {
         try {
             List<EzPriviledge> list = daoPriviledge.findByGroupId(groupId);
             for (EzPriviledge priviledge : list) {
@@ -73,7 +73,7 @@ public class PriviledgeServices {
         }
     }
 
-    public void delete(EzPriviledge priviledge) throws Exception {
+    public void delete(EzPriviledge priviledge) {
         try {
             daoPriviledge.delete(priviledge);
         } catch (Exception e) {

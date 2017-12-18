@@ -30,7 +30,7 @@ public class SessionServices {
     @Autowired
     private SessionDao daoSession;
 
-    public void sessionLogin(String username, String sessionId, String ip) throws Exception {
+    public void sessionLogin(String username, String sessionId, String ip) {
         try {
             EzSession pojo = daoSession.findOne(username);
             Date now = new Date();
@@ -54,7 +54,7 @@ public class SessionServices {
         }
     }
 
-    public boolean sessionCheck(String username, String sessionId) throws Exception {
+    public boolean sessionCheck(String username, String sessionId) {
         boolean valid = true;
         try {
             EzSession pojo = daoSession.findOne(username);

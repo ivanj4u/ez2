@@ -65,36 +65,34 @@ public class MenuComponent extends CustomComponent {
         settings = new MenuBar();
         settings.addStyleName("user-menu");
 
-        if (getCurrentUser() != null) {
-            setPrimaryStyleName("valo-menu");
-            setId(ID);
-            setSizeUndefined();
-            setCompositionRoot(buildContent());
+        setPrimaryStyleName("valo-menu");
+        setId(ID);
+        setSizeUndefined();
+        setCompositionRoot(buildContent());
 
-            listener = new DetailCallbackListener() {
+        listener = new DetailCallbackListener() {
 
-                @Override
-                public void onAfterAdded(Object pojo) {
+            @Override
+            public void onAfterAdded(Object pojo) {
 
-                }
+            }
 
-                @Override
-                public void onAfterUpdated(Object pojo) {
-                    Boolean isPassword = (Boolean) pojo;
-                    closeScreen(isPassword);
-                }
+            @Override
+            public void onAfterUpdated(Object pojo) {
+                Boolean isPassword = (Boolean) pojo;
+                closeScreen(isPassword);
+            }
 
-                @Override
-                public void onAfterViewed() {
+            @Override
+            public void onAfterViewed() {
 
-                }
+            }
 
-                @Override
-                public void onCancel() {
+            @Override
+            public void onCancel() {
 
-                }
-            };
-        }
+            }
+        };
     }
 
     private Component buildContent() {

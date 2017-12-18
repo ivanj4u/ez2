@@ -15,9 +15,12 @@ package com.ez2.acc.view.menu;
 import com.ez2.acc.entity.EzMenu;
 import com.ez2.acc.framework.component.NotificationHelper;
 import com.ez2.acc.framework.constants.Constants;
+import com.ez2.acc.framework.criteria.PredicatesBuilder;
 import com.ez2.acc.framework.impl.AbstractDetailScreen;
 import com.ez2.acc.framework.impl.AbstractSearchScreen;
 import com.ez2.acc.services.MenuServices;
+import com.ez2.acc.util.ValidationHelper;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
@@ -123,7 +126,18 @@ public class ListMenuView extends AbstractSearchScreen implements View {
     @Override
     protected void doSearch() {
         try {
-            list = servicesMenu.queryList(txtMenuId.getValue(), txtMenuName.getValue(), txtMenuParent.getValue());
+            PredicatesBuilder builder = new PredicatesBuilder();
+            if (ValidationHelper.validateValueNotNull(txtMenuId.getValue())) {
+                builder.add("menuId", ":", txtMenuId.getValue());
+            }
+            if (ValidationHelper.validateValueNotNull(txtMenuName.getValue())) {
+                builder.add("menuName", "%", txtMenuName.getValue());
+            }
+            if (ValidationHelper.validateValueNotNull(txtMenuParent.getValue())) {
+                builder.add("parentId", ":", txtMenuParent.getValue());
+            }
+            PathBuilder<EzMenu> entity = new PathBuilder<>(EzMenu.class, "ezMenu");
+            list = servicesMenu.queryList(builder.build(entity));
             table.setItems(list);
         } catch (Exception e) {
             e.printStackTrace();

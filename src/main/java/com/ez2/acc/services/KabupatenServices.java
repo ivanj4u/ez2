@@ -54,12 +54,12 @@ public class KabupatenServices extends AuditTrailServices {
     }
 
     @Override
-    public void save(Object pojo) throws Exception {
+    public void save(Object pojo) {
 
     }
 
     @Override
-    public void update(Object pojo) throws Exception {
+    public void update(Object pojo) {
 
     }
 }

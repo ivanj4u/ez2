@@ -32,7 +32,7 @@ public class ParamServices extends AuditTrailServices {
     @Autowired
     private ParamDao daoParam;
 
-    public List<EzParam> queryList(String key) throws Exception {
+    public List<EzParam> queryList(String key) {
         List<EzParam> list = new ArrayList<>();
         try {
             if (ValidationHelper.validateValueNotNull(key)) {
@@ -47,7 +47,7 @@ public class ParamServices extends AuditTrailServices {
         return list;
     }
 
-    public List<EzParam> getList() throws Exception {
+    public List<EzParam> getList() {
         List<EzParam> list = new ArrayList<>();
         try {
             list = daoParam.findAll();
@@ -58,7 +58,7 @@ public class ParamServices extends AuditTrailServices {
         return list;
     }
 
-    public EzParam getParam(String key) throws Exception {
+    public EzParam getParam(String key) {
         EzParam param = null;
         try {
             param = daoParam.findOne(key);
@@ -70,7 +70,7 @@ public class ParamServices extends AuditTrailServices {
     }
 
     @Override
-    public void save(Object pojo) throws Exception {
+    public void save(Object pojo) {
         EzParam param = (EzParam) pojo;
         try {
             saveAudit(param);
@@ -82,7 +82,7 @@ public class ParamServices extends AuditTrailServices {
     }
 
     @Override
-    public void update(Object pojo) throws Exception {
+    public void update(Object pojo) {
         EzParam updatedParam = (EzParam) pojo;
         try {
             EzParam param = daoParam.findOne(updatedParam.getKey());

@@ -19,7 +19,8 @@ import com.ez2.acc.dao.UserGroupDao;
 import com.ez2.acc.entity.EzGroup;
 import com.ez2.acc.entity.EzUser;
 import com.ez2.acc.entity.EzUserGroup;
-import com.ez2.acc.util.ValidationHelper;
+import com.ez2.acc.entity.QEzUserGroup;
+import com.querydsl.core.types.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,14 +41,12 @@ public class UserGroupServices {
     @Autowired
     private GroupDao daoGroup;
 
-    public List<EzUserGroup> getUserGroupByGroupId(String groupId) throws Exception {
+    public List<EzUserGroup> getUserGroupByUser(String userId) {
         List<EzUserGroup> list = new ArrayList<>();
         try {
-            if (ValidationHelper.validateValueNotNull(groupId)) {
-                list = daoUserGroup.findByGroupId(new Long(groupId));
-            } else {
-                list = daoUserGroup.findAll();
-            }
+            QEzUserGroup userGroup = QEzUserGroup.ezUserGroup;
+            Predicate predicate = userGroup.userId.eq(userId);
+            list = daoUserGroup.findAll(predicate);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
@@ -55,44 +54,15 @@ public class UserGroupServices {
         return list;
     }
 
-    public List<EzUserGroup> getUserGroupByUser(String userId) throws Exception {
-        List<EzUserGroup> list = new ArrayList<>();
-        try {
-            if (ValidationHelper.validateValueNotNull(userId)) {
-                list = daoUserGroup.findByUserId(userId);
-            } else {
-                list = daoUserGroup.findAll();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
-        }
-        return list;
-    }
-
-    public List<EzUserGroup> getUserGroup(String groupId, String userId) throws Exception {
-        List<EzUserGroup> list = new ArrayList<>();
-        try {
-            if (ValidationHelper.validateValueNotNull(userId) && ValidationHelper.validateValueNotNull(groupId)) {
-                list = daoUserGroup.findByGroupIdAndUserId(new Long(groupId), userId);
-            } else if (ValidationHelper.validateValueNotNull(userId)) {
-                list = daoUserGroup.findByUserId(userId);
-            } else if (ValidationHelper.validateValueNotNull(groupId)) {
-                list = daoUserGroup.findByGroupId(new Long(groupId));
-            } else {
-                list = daoUserGroup.findAll();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
-        }
-        return list;
-    }
-
-    public List<JoinUserGroup> queryList(String groupId, String userId) throws Exception {
+    public List<JoinUserGroup> queryList(Predicate predicate) {
         List<JoinUserGroup> list = new ArrayList<>();
         try {
-            List<EzUserGroup> userGroups = getUserGroup(groupId, userId);
+            List<EzUserGroup> userGroups;
+            if (predicate != null) {
+                userGroups = daoUserGroup.findAll(predicate);
+            } else {
+                userGroups = daoUserGroup.findAll();
+            }
             for (EzUserGroup userGroup : userGroups) {
                 EzUser user = daoUser.findOne(userGroup.getUserId());
                 EzGroup group = daoGroup.findOne(userGroup.getGroupId());
@@ -105,7 +75,7 @@ public class UserGroupServices {
         return list;
     }
 
-    public void save(EzUserGroup userGroup) throws Exception {
+    public void save(EzUserGroup userGroup) {
         try {
             daoUserGroup.save(userGroup);
         } catch (Exception e) {
@@ -114,7 +84,7 @@ public class UserGroupServices {
         }
     }
 
-    public void delete(EzUserGroup userGroup) throws Exception {
+    public void delete(EzUserGroup userGroup) {
         try {
             daoUserGroup.delete(userGroup);
         } catch (Exception e) {

@@ -55,7 +55,7 @@ public class MenuLoader {
     }
 
     @SuppressWarnings("unchecked")
-    public AbstractScreen getScreen(String menuId) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public AbstractScreen getScreen(String menuId) throws ClassNotFoundException {
         for (EzMenu menu : v) {
             if (menu.getMenuId().equals(menuId)) {
                 Class c = Class.forName(menu.getMenuClass());

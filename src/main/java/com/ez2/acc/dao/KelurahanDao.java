@@ -13,11 +13,12 @@
 package com.ez2.acc.dao;
 
 import com.ez2.acc.entity.EzKelurahan;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface KelurahanDao extends CrudRepository<EzKelurahan, String> {
+public interface KelurahanDao extends CrudRepository<EzKelurahan, String>, QueryDslPredicateExecutor<EzKelurahan> {
 
     List<EzKelurahan> queryEzKelurahansByKodeKecamatanEquals(String kodeKecamatan);
 

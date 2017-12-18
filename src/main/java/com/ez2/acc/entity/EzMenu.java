@@ -35,7 +35,6 @@ public class EzMenu extends AuditTrail implements Serializable {
     private String param;
     @Column(name = "parent_id", length = 100, nullable = false)
     private String parentId;
-
     @Column(name = "have_child", length = 1, nullable = false)
     private String haveChild;
 

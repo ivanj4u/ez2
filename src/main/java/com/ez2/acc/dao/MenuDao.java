@@ -13,27 +13,20 @@
 package com.ez2.acc.dao;
 
 import com.ez2.acc.entity.EzMenu;
+import com.querydsl.core.types.Predicate;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface MenuDao extends CrudRepository<EzMenu, String> {
-
-    List<EzMenu> queryEzMenusByMenuIdEqualsAndMenuNameLikeAndParentIdEquals(String menuId, String menuName, String parentId);
-
-    List<EzMenu> queryEzMenusByMenuIdEqualsAndMenuNameLike(String menuId, String menuName);
-
-    List<EzMenu> queryEzMenusByMenuNameLikeAndParentIdEquals(String menuName, String parentId);
-
-    List<EzMenu> queryEzMenusByMenuIdEqualsAndParentIdEquals(String menuId, String parentId);
-
-    List<EzMenu> queryEzMenusByMenuNameLike(String menuName);
-
-    List<EzMenu> queryEzMenusByParentIdEquals(String parentId);
+public interface MenuDao extends CrudRepository<EzMenu, String>, QueryDslPredicateExecutor<EzMenu> {
 
     @Query(value = "select menu from EzMenu menu order by menu.menuId asc")
     List<EzMenu> queryEzMenus();
+
+    @Override
+    List<EzMenu> findAll(Predicate predicate);
 
     @Override
     @Query(value = "select menu from EzMenu menu order by menu.parentId asc , menu.noUrut asc")

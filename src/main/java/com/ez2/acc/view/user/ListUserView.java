@@ -15,9 +15,12 @@ package com.ez2.acc.view.user;
 import com.ez2.acc.entity.EzUser;
 import com.ez2.acc.framework.component.NotificationHelper;
 import com.ez2.acc.framework.constants.Constants;
+import com.ez2.acc.framework.criteria.PredicatesBuilder;
 import com.ez2.acc.framework.impl.AbstractDetailScreen;
 import com.ez2.acc.framework.impl.AbstractSearchScreen;
 import com.ez2.acc.services.UserServices;
+import com.ez2.acc.util.ValidationHelper;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
@@ -45,7 +48,7 @@ public class ListUserView extends AbstractSearchScreen implements View {
     private UserServices servicesUser;
     @Autowired
     private ApplicationContext applicationContext;
-    private TextField txtUsername, txtName;
+    private TextField txtUserId, txtName;
     private AbstractDetailScreen detailScreen;
     private List<EzUser> list;
     private Grid<EzUser> table;
@@ -65,7 +68,7 @@ public class ListUserView extends AbstractSearchScreen implements View {
         Label lbl = new Label("Id Pengguna");
         lbl.setWidth("100px");
         grid.addComponent(lbl, 0, row);
-        grid.addComponent(txtUsername = new TextField(), 1, row++);
+        grid.addComponent(txtUserId = new TextField(), 1, row++);
         grid.addComponent(new Label("Nama"), 0, row);
         grid.addComponent(txtName = new TextField(), 1, row++);
     }
@@ -118,7 +121,15 @@ public class ListUserView extends AbstractSearchScreen implements View {
     @Override
     protected void doSearch() {
         try {
-            list = servicesUser.queryList(txtUsername.getValue(), txtName.getValue());
+            PredicatesBuilder builder = new PredicatesBuilder();
+            if (ValidationHelper.validateValueNotNull(txtUserId.getValue())) {
+                builder.add("userId", ":", txtUserId.getValue());
+            }
+            if (ValidationHelper.validateValueNotNull(txtName.getValue())) {
+                builder.add("name", "%", txtName.getValue());
+            }
+            PathBuilder<EzUser> entityPath = new PathBuilder<>(EzUser.class, "ezUser");
+            list = servicesUser.queryList(builder.build(entityPath));
             table.setItems(list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -155,7 +166,7 @@ public class ListUserView extends AbstractSearchScreen implements View {
     @Override
     protected void doReset() {
         txtName.setValue("");
-        txtUsername.setValue("");
+        txtUserId.setValue("");
         list.clear();
         table.setItems(list);
     }

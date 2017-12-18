@@ -13,11 +13,12 @@
 package com.ez2.acc.dao;
 
 import com.ez2.acc.entity.EzProvinsi;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface ProvinsiDao extends CrudRepository<EzProvinsi, String> {
+public interface ProvinsiDao extends CrudRepository<EzProvinsi, String>, QueryDslPredicateExecutor<EzProvinsi> {
 
     @Override
     List<EzProvinsi> findAll();

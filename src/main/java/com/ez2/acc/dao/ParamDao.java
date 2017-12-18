@@ -13,11 +13,12 @@
 package com.ez2.acc.dao;
 
 import com.ez2.acc.entity.EzParam;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface ParamDao extends CrudRepository<EzParam, String> {
+public interface ParamDao extends CrudRepository<EzParam, String>, QueryDslPredicateExecutor<EzParam> {
 
     List<EzParam> queryEzParamsByKeyLike(String key);
 

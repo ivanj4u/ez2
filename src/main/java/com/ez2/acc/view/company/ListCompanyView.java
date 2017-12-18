@@ -15,9 +15,12 @@ package com.ez2.acc.view.company;
 import com.ez2.acc.entity.EzCompany;
 import com.ez2.acc.framework.component.NotificationHelper;
 import com.ez2.acc.framework.constants.Constants;
+import com.ez2.acc.framework.criteria.PredicatesBuilder;
 import com.ez2.acc.framework.impl.AbstractDetailScreen;
 import com.ez2.acc.framework.impl.AbstractSearchScreen;
 import com.ez2.acc.services.CompanyServices;
+import com.ez2.acc.util.ValidationHelper;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
@@ -122,7 +125,15 @@ public class ListCompanyView extends AbstractSearchScreen implements View {
     @Override
     protected void doSearch() {
         try {
-            list = servicesCompany.queryList(txtCompanyCode.getValue(), txtName.getValue());
+            PredicatesBuilder builder = new PredicatesBuilder();
+            if (ValidationHelper.validateValueNotNull(txtCompanyCode.getValue())) {
+                builder.add("companyCode", ":", txtCompanyCode.getValue());
+            }
+            if (ValidationHelper.validateValueNotNull(txtName.getValue())) {
+                builder.add("name", "%", txtName.getValue());
+            }
+            PathBuilder<EzCompany> entity = new PathBuilder<>(EzCompany.class, "ezCompany");
+            list = servicesCompany.queryList(builder.build(entity));
             table.setItems(list);
         } catch (Exception e) {
             e.printStackTrace();

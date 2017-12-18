@@ -14,7 +14,7 @@ package com.ez2.acc.services;
 
 import com.ez2.acc.dao.CompanyDao;
 import com.ez2.acc.entity.EzCompany;
-import com.ez2.acc.util.ValidationHelper;
+import com.querydsl.core.types.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -33,7 +33,7 @@ public class CompanyServices extends AuditTrailServices {
     private CompanyDao daoCompany;
 
     @Override
-    public void save(Object pojo) throws Exception {
+    public void save(Object pojo) {
         EzCompany company = (EzCompany) pojo;
         try {
             saveAudit(company);
@@ -45,7 +45,7 @@ public class CompanyServices extends AuditTrailServices {
     }
 
     @Override
-    public void update(Object pojo) throws Exception {
+    public void update(Object pojo) {
         EzCompany updatedCompany = (EzCompany) pojo;
         try {
             EzCompany company = daoCompany.findOne(updatedCompany.getCompanyCode());
@@ -58,15 +58,11 @@ public class CompanyServices extends AuditTrailServices {
         }
     }
 
-    public List<EzCompany> queryList(String companyCode, String name) throws Exception {
+    public List<EzCompany> queryList(Predicate predicate) {
         List<EzCompany> list = new ArrayList<>();
         try {
-            if (ValidationHelper.validateValueNotNull(companyCode) && ValidationHelper.validateValueNotNull(name)) {
-                list = daoCompany.queryEzCompaniesByCompanyCodeEqualsAndNameLike(companyCode, ("%" + name + "%"));
-            } else if (ValidationHelper.validateValueNotNull(companyCode)) {
-                list = daoCompany.queryEzCompaniesByCompanyCodeEquals(companyCode);
-            } else if (ValidationHelper.validateValueNotNull(name)) {
-                list = daoCompany.queryEzCompaniesByNameLike(("%" + name + "%"));
+            if (predicate != null) {
+                list = daoCompany.findAll(predicate);
             } else {
                 list = daoCompany.findAll();
             }
@@ -77,7 +73,7 @@ public class CompanyServices extends AuditTrailServices {
         return list;
     }
 
-    public EzCompany getCompany(String companyCode) throws Exception {
+    public EzCompany getCompany(String companyCode) {
         EzCompany company = null;
         try {
             company = daoCompany.findOne(companyCode);

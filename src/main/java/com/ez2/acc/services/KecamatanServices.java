@@ -19,12 +19,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class KecamatanServices extends AuditTrailServices {
     @Override
-    public void save(Object pojo) throws Exception {
+    public void save(Object pojo) {
 
     }
 
     @Override
-    public void update(Object pojo) throws Exception {
+    public void update(Object pojo) {
 
     }
 }

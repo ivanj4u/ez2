@@ -14,11 +14,12 @@ package com.ez2.acc.dao;
 
 import com.ez2.acc.entity.EzPriviledge;
 import com.ez2.acc.entity.EzPriviledgeId;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface PriviledgeDao extends CrudRepository<EzPriviledge, EzPriviledgeId> {
+public interface PriviledgeDao extends CrudRepository<EzPriviledge, EzPriviledgeId>, QueryDslPredicateExecutor<EzPriviledge> {
 
     List<EzPriviledge> findByGroupId(Long groupId);
 

@@ -13,13 +13,16 @@
 package com.ez2.acc.dao;
 
 import com.ez2.acc.entity.EzGroup;
+import com.querydsl.core.types.Predicate;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface GroupDao extends CrudRepository<EzGroup, Long> {
-
+public interface GroupDao extends CrudRepository<EzGroup, Long>, QueryDslPredicateExecutor<EzGroup> {
     @Override
     List<EzGroup> findAll();
 
+    @Override
+    List<EzGroup> findAll(Predicate predicate);
 }

@@ -13,18 +13,17 @@
 package com.ez2.acc.dao;
 
 import com.ez2.acc.entity.EzCompany;
+import com.querydsl.core.types.Predicate;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface CompanyDao extends CrudRepository<EzCompany, String> {
-
-    List<EzCompany> queryEzCompaniesByCompanyCodeEqualsAndNameLike(String companyCode, String name);
-
-    List<EzCompany> queryEzCompaniesByNameLike(String name);
-
-    List<EzCompany> queryEzCompaniesByCompanyCodeEquals(String companyCode);
+public interface CompanyDao extends CrudRepository<EzCompany, String>, QueryDslPredicateExecutor<EzCompany> {
 
     @Override
     List<EzCompany> findAll();
+
+    @Override
+    List<EzCompany> findAll(Predicate predicate);
 }

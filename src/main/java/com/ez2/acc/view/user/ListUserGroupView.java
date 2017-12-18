@@ -13,11 +13,15 @@
 package com.ez2.acc.view.user;
 
 import com.ez2.acc.container.JoinUserGroup;
+import com.ez2.acc.entity.EzUserGroup;
 import com.ez2.acc.framework.component.NotificationHelper;
 import com.ez2.acc.framework.constants.Constants;
+import com.ez2.acc.framework.criteria.PredicatesBuilder;
 import com.ez2.acc.framework.impl.AbstractDetailScreen;
 import com.ez2.acc.framework.impl.AbstractSearchScreen;
 import com.ez2.acc.services.UserGroupServices;
+import com.ez2.acc.util.ValidationHelper;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
@@ -45,7 +49,7 @@ public class ListUserGroupView extends AbstractSearchScreen implements View {
     private UserGroupServices servicesUserGroup;
     @Autowired
     private ApplicationContext applicationContext;
-    private TextField txtGroupId, txtUsername;
+    private TextField txtGroupId, txtUserId;
     private AbstractDetailScreen detailScreen;
     private List<JoinUserGroup> list;
     private Grid<JoinUserGroup> table;
@@ -67,7 +71,7 @@ public class ListUserGroupView extends AbstractSearchScreen implements View {
         grid.addComponent(lbl, 0, row);
         grid.addComponent(txtGroupId = new TextField(), 1, row++);
         grid.addComponent(new Label("Id Pengguna"), 0, row);
-        grid.addComponent(txtUsername = new TextField(), 1, row++);
+        grid.addComponent(txtUserId = new TextField(), 1, row++);
     }
 
     @Override
@@ -118,7 +122,15 @@ public class ListUserGroupView extends AbstractSearchScreen implements View {
     @Override
     protected void doSearch() {
         try {
-            list = servicesUserGroup.queryList(txtGroupId.getValue(), txtUsername.getValue());
+            PredicatesBuilder builder = new PredicatesBuilder();
+            if (ValidationHelper.validateValueNotNull(txtGroupId.getValue())) {
+                builder.add("groupId", ":", txtGroupId.getValue());
+            }
+            if (ValidationHelper.validateValueNotNull(txtUserId.getValue())) {
+                builder.add("userId", ":", txtUserId.getValue());
+            }
+            PathBuilder<EzUserGroup> entity = new PathBuilder<>(EzUserGroup.class, "ezUserGroup");
+            list = servicesUserGroup.queryList(builder.build(entity));
             table.setItems(list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -130,7 +142,7 @@ public class ListUserGroupView extends AbstractSearchScreen implements View {
     @Override
     protected void doReset() {
         txtGroupId.setValue("");
-        txtUsername.setValue("");
+        txtUserId.setValue("");
         list.clear();
         table.setItems(list);
     }

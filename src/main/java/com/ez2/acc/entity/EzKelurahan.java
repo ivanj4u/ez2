@@ -22,50 +22,48 @@ import java.io.Serializable;
 @Table(name = "ez_kelurahan", schema = "ez")
 public class EzKelurahan extends AuditTrail implements Serializable {
 
-	private String kodeKelurahan;
-	private String namaKelurahan;
-	private String kodePos;
-	private String kodeKecamatan;
+    @Id
+    @Column(name = "kode_kelurahan", nullable = false, length = 10)
+    private String kodeKelurahan;
+    @Column(name = "nama_kelurahan", nullable = false, length = 100)
+    private String namaKelurahan;
+    @Column(name = "kode_pos", length = 6)
+    private String kodePos;
+    @Column(name = "kode_kecamatan", nullable = false, length = 6)
+    private String kodeKecamatan;
 
-	public EzKelurahan() {
-	}
+    public EzKelurahan() {
+    }
 
-	@Id
-	@Column(name = "kode_kelurahan", nullable = false, length = 10)
-	public String getKodeKelurahan() {
-		return this.kodeKelurahan;
-	}
+    public String getKodeKelurahan() {
+        return kodeKelurahan;
+    }
 
-	public void setKodeKelurahan(String kodeKelurahan) {
-		this.kodeKelurahan = kodeKelurahan;
-	}
-	
-	@Id
-	@Column(name = "kode_kecamatan", nullable = false, length = 6)
-	public String getKodeKecamatan() {
-		return this.kodeKecamatan;
-	}
+    public void setKodeKelurahan(String kodeKelurahan) {
+        this.kodeKelurahan = kodeKelurahan;
+    }
 
-	public void setKodeKecamatan(String kodeKecamatan) {
-		this.kodeKecamatan = kodeKecamatan;
-	}
+    public String getNamaKelurahan() {
+        return namaKelurahan;
+    }
 
-	@Column(name = "nama_kelurahan", nullable = false, length = 100)
-	public String getNamaKelurahan() {
-		return this.namaKelurahan;
-	}
+    public void setNamaKelurahan(String namaKelurahan) {
+        this.namaKelurahan = namaKelurahan;
+    }
 
-	public void setNamaKelurahan(String namaKelurahan) {
-		this.namaKelurahan = namaKelurahan;
-	}
+    public String getKodePos() {
+        return kodePos;
+    }
 
-	@Column(name = "kode_pos", length = 6)
-	public String getKodePos() {
-		return this.kodePos;
-	}
+    public void setKodePos(String kodePos) {
+        this.kodePos = kodePos;
+    }
 
-	public void setKodePos(String kodePos) {
-		this.kodePos = kodePos;
-	}
+    public String getKodeKecamatan() {
+        return kodeKecamatan;
+    }
 
+    public void setKodeKecamatan(String kodeKecamatan) {
+        this.kodeKecamatan = kodeKecamatan;
+    }
 }

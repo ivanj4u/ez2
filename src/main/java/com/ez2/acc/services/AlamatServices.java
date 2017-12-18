@@ -23,12 +23,12 @@ public class AlamatServices extends AuditTrailServices {
     @Autowired private AlamatDao daoAlamat;
 
     @Override
-    public void save(Object pojo) throws Exception {
+    public void save(Object pojo) {
 
     }
 
     @Override
-    public void update(Object pojo) throws Exception {
+    public void update(Object pojo) {
 
     }
 }

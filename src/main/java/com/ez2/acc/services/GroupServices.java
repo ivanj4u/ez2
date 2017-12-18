@@ -14,7 +14,7 @@ package com.ez2.acc.services;
 
 import com.ez2.acc.dao.GroupDao;
 import com.ez2.acc.entity.EzGroup;
-import com.ez2.acc.util.ValidationHelper;
+import com.querydsl.core.types.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -33,23 +33,11 @@ public class GroupServices extends AuditTrailServices {
     @Autowired
     private GroupDao daoGroup;
 
-    public EzGroup getGroup(String groupId) {
-        EzGroup group = null;
-        try {
-            group = daoGroup.findOne(new Long(groupId));
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
-        }
-        return group;
-    }
-
-    public List<EzGroup> queryList(String groupId) {
+    public List<EzGroup> queryList(Predicate predicate) {
         List<EzGroup> list = new ArrayList<>();
-        if (ValidationHelper.validateValueNotNull(groupId)) {
-            EzGroup group = daoGroup.findOne(new Long(groupId));
-            if (group != null)
-                list.add(group);
+
+        if (predicate != null) {
+            list = daoGroup.findAll(predicate);
         } else {
             list = daoGroup.findAll();
         }
@@ -68,7 +56,7 @@ public class GroupServices extends AuditTrailServices {
     }
 
     @Override
-    public void save(Object pojo) throws Exception {
+    public void save(Object pojo) {
         EzGroup group = (EzGroup) pojo;
         try {
             saveAudit(group);
@@ -80,7 +68,7 @@ public class GroupServices extends AuditTrailServices {
     }
 
     @Override
-    public void update(Object pojo) throws Exception {
+    public void update(Object pojo) {
         EzGroup updatedGroup = (EzGroup) pojo;
         try {
             EzGroup group = daoGroup.findOne(updatedGroup.getGroupId());

@@ -14,7 +14,7 @@ package com.ez2.acc.services;
 
 import com.ez2.acc.dao.UserDao;
 import com.ez2.acc.entity.EzUser;
-import com.ez2.acc.util.ValidationHelper;
+import com.querydsl.core.types.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -33,7 +33,7 @@ public class UserServices extends AuditTrailServices {
     private UserDao daoUser;
 
     @Override
-    public void save(Object pojo) throws Exception {
+    public void save(Object pojo) {
         EzUser user = (EzUser) pojo;
         try {
             saveAudit(user);
@@ -45,7 +45,7 @@ public class UserServices extends AuditTrailServices {
     }
 
     @Override
-    public void update(Object pojo) throws Exception {
+    public void update(Object pojo) {
         EzUser updatedUser = (EzUser) pojo;
         try {
             EzUser user = daoUser.findOne(updatedUser.getUserId());
@@ -58,17 +58,13 @@ public class UserServices extends AuditTrailServices {
         }
     }
 
-    public List<EzUser> queryList(String userId, String name) throws Exception {
+    public List<EzUser> queryList(Predicate predicate) {
         List<EzUser> list = new ArrayList<>();
         try {
-            if (ValidationHelper.validateValueNotNull(userId) && ValidationHelper.validateValueNotNull(name)) {
-                list = daoUser.queryEzUsersByUserIdEqualsAndNameIsLike(userId, ("%" + name + "%"));
-            } else if (ValidationHelper.validateValueNotNull(userId)) {
-                list = daoUser.queryEzUsersByUserIdEquals(userId);
-            } else if (ValidationHelper.validateValueNotNull(name)) {
-                list = daoUser.queryEzUsersByNameLike(("%" + name + "%"));
-            } else {
+            if (predicate == null) {
                 list = daoUser.findAll();
+            } else {
+                list = daoUser.findAll(predicate);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,7 +73,7 @@ public class UserServices extends AuditTrailServices {
         return list;
     }
 
-    public EzUser getUser(String userId) throws Exception {
+    public EzUser getUser(String userId) {
         EzUser user = null;
         try {
             user = daoUser.findOne(userId);

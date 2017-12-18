@@ -13,11 +13,12 @@
 package com.ez2.acc.dao;
 
 import com.ez2.acc.entity.EzAlamat;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface AlamatDao extends CrudRepository<EzAlamat, String> {
+public interface AlamatDao extends CrudRepository<EzAlamat, String>, QueryDslPredicateExecutor<EzAlamat> {
 
     @Override
     List<EzAlamat> findAll();

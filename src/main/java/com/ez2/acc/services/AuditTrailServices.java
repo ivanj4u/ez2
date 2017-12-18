@@ -21,7 +21,7 @@ import java.util.Date;
 
 public abstract class AuditTrailServices {
 
-    protected void saveAudit(Object pojo) throws Exception {
+    protected void saveAudit(Object pojo) {
         EzUser user = VaadinSession.getCurrent().getAttribute(EzUser.class);
         Date now = new Date();
         if (user != null) {
@@ -33,7 +33,7 @@ public abstract class AuditTrailServices {
         ((AuditTrail) pojo).setVersi(now.getTime());
     }
 
-    protected void updateAudit(Object pojo) throws Exception {
+    protected void updateAudit(Object pojo) {
         EzUser user = VaadinSession.getCurrent().getAttribute(EzUser.class);
         Date now = new Date();
         if (user != null) {
@@ -45,7 +45,7 @@ public abstract class AuditTrailServices {
         ((AuditTrail) pojo).setVersi(now.getTime());
     }
 
-    public abstract void save(Object pojo) throws Exception;
+    public abstract void save(Object pojo);
 
-    public abstract void update(Object pojo) throws Exception;
+    public abstract void update(Object pojo);
 }
