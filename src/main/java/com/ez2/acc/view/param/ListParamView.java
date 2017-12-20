@@ -15,9 +15,12 @@ package com.ez2.acc.view.param;
 import com.ez2.acc.entity.EzParam;
 import com.ez2.acc.framework.component.NotificationHelper;
 import com.ez2.acc.framework.constants.Constants;
+import com.ez2.acc.framework.criteria.PredicatesBuilder;
 import com.ez2.acc.framework.impl.AbstractDetailScreen;
 import com.ez2.acc.framework.impl.AbstractSearchScreen;
 import com.ez2.acc.services.ParamServices;
+import com.ez2.acc.util.ValidationHelper;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
@@ -115,7 +118,12 @@ public class ListParamView extends AbstractSearchScreen implements View {
     @Override
     protected void doSearch() {
         try {
-            list = servicesParam.queryList(txtKey.getValue());
+            PredicatesBuilder builder = new PredicatesBuilder();
+            if (ValidationHelper.validateValueNotNull(txtKey.getValue())) {
+                builder.add("key", ":", txtKey.getValue());
+            }
+            PathBuilder<EzParam> entity = new PathBuilder<>(EzParam.class, "ezParam");
+            list = servicesParam.queryList(builder.build(entity));
             table.setItems(list);
         } catch (Exception e) {
             e.printStackTrace();

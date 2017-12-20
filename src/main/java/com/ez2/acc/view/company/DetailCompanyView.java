@@ -19,6 +19,7 @@ import com.ez2.acc.framework.component.PopUpComboBox;
 import com.ez2.acc.framework.constants.Constants;
 import com.ez2.acc.framework.impl.AbstractDetailScreen;
 import com.ez2.acc.framework.listener.FieldShortcutListener;
+import com.ez2.acc.loader.AlamatLoader;
 import com.ez2.acc.services.CompanyServices;
 import com.ez2.acc.util.ValidationHelper;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -29,18 +30,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Hashtable;
+import java.util.Iterator;
+
 @SpringComponent
 @UIScope
 public class DetailCompanyView extends AbstractDetailScreen {
     private static final Logger logger = LoggerFactory.getLogger(DetailCompanyView.class);
     @Autowired
     private CompanyServices servicesCompany;
+    @Autowired
+    private AlamatLoader loaderAlamat;
+
     // Company
     private TextField txtCompanyCode, txtName, txtEmail, txtFax, txtPhone, txtParentCode, txtParentName;
     private PopUpComboBox cmbStatus;
     // Alamat
-    private TextField txtAlamat, txtRt, txtRw;
-    private PopUpComboBox cmbProvinsi, cmbKecamatan, cmbKelurahan;
+    private TextField txtAlamat, txtRt, txtRw, txtKodePos;
+    private PopUpComboBox cmbProvinsi, cmbKabupaten, cmbKecamatan, cmbKelurahan;
     private EzCompany pojoCompany;
 
     @Override
@@ -49,6 +56,8 @@ public class DetailCompanyView extends AbstractDetailScreen {
         layout.addStyleName(ValoTheme.PANEL_WELL);
 
         layout.addComponent(initCompany());
+        layout.addComponent(initAlamat());
+        generateCombobox();
 
         return layout;
     }
@@ -102,11 +111,11 @@ public class DetailCompanyView extends AbstractDetailScreen {
     }
 
     private Component initAlamat() {
-        GridLayout grid = new GridLayout(2, 10);
-        grid.setCaption("Alamat");
+        GridLayout grid = new GridLayout(3, 10);
+        grid.setCaption("Alamat Perusahaan");
         int row = 0;
 
-        Label lbl = new Label("Id Perusahaan");
+        Label lbl = new Label("Jalan");
         lbl.setWidth("155px");
         grid.addComponent(lbl, 0, row);
         grid.addComponent(txtAlamat = new TextField(), 1, row, 2, row++);
@@ -119,21 +128,68 @@ public class DetailCompanyView extends AbstractDetailScreen {
         grid.addComponent(horizontalLayout, 1, row, 2, row++);
 
         grid.addComponent(new Label("Provinsi"), 0, row);
-        grid.addComponent(cmbStatus = new PopUpComboBox(), 1, row, 2, row++);
-        cmbStatus.addItem(new ItemComponent("1", "Aktif"));
-        cmbStatus.addItem(new ItemComponent("0", "Tidak Aktif"));
+        grid.addComponent(cmbProvinsi = new PopUpComboBox(), 1, row, 2, row++);
 
-        grid.addComponent(new Label("Kelurahan"), 0, row);
-        grid.addComponent(cmbStatus = new PopUpComboBox(), 1, row, 2, row++);
-        cmbStatus.addItem(new ItemComponent("1", "Aktif"));
-        cmbStatus.addItem(new ItemComponent("0", "Tidak Aktif"));
+        grid.addComponent(new Label("Kabupaten"), 0, row);
+        grid.addComponent(cmbKabupaten = new PopUpComboBox(), 1, row, 2, row++);
 
         grid.addComponent(new Label("Kecamatan"), 0, row);
-        grid.addComponent(cmbStatus = new PopUpComboBox(), 1, row, 2, row++);
-        cmbStatus.addItem(new ItemComponent("1", "Aktif"));
-        cmbStatus.addItem(new ItemComponent("0", "Tidak Aktif"));
+        grid.addComponent(cmbKecamatan = new PopUpComboBox(), 1, row, 2, row++);
+
+        grid.addComponent(new Label("Kelurahan"), 0, row);
+        grid.addComponent(cmbKelurahan = new PopUpComboBox(), 1, row, 2, row++);
+
+        grid.addComponent(new Label("Kode Pos"), 0, row);
+        grid.addComponent(txtKodePos = new TextField(), 1, row, 2, row++);
 
         return grid;
+    }
+
+    private void generateCombobox() {
+        cmbKabupaten.setEnabled(false);
+        cmbKecamatan.setEnabled(false);
+        cmbKelurahan.setEnabled(false);
+
+        // Provinsi
+        Hashtable<String, String> h = loaderAlamat.getProvinsi();
+        for (Iterator<String> it = h.keySet().iterator(); it.hasNext();) {
+            String key = it.next();
+            cmbProvinsi.addItem(new ItemComponent(key, h.get(key)));
+        }
+        // Listener
+        cmbProvinsi.addValueChangeListener(event -> {
+            cmbKabupaten.clear();
+            Hashtable<String, String> hDetail =
+                    loaderAlamat.getKabupatenByProvinsi(cmbProvinsi.getValueItem().toString());
+            for (Iterator<String> it = hDetail.keySet().iterator(); it.hasNext();) {
+                String key = it.next();
+                cmbKabupaten.addItem(new ItemComponent(key, hDetail.get(key)));
+            }
+            cmbKabupaten.setEnabled(true);
+        });
+        cmbKabupaten.addValueChangeListener(event -> {
+            cmbKecamatan.clear();
+            Hashtable<String, String> hDetail =
+                    loaderAlamat.getKecamatanByKabupaten(cmbKabupaten.getValueItem().toString());
+            for (Iterator<String> it = hDetail.keySet().iterator(); it.hasNext();) {
+                String key = it.next();
+                cmbKecamatan.addItem(new ItemComponent(key, hDetail.get(key)));
+            }
+            cmbKecamatan.setEnabled(true);
+        });
+        cmbKecamatan.addValueChangeListener(event -> {
+            cmbKelurahan.clear();
+            Hashtable<String, String> hDetail =
+                    loaderAlamat.getKelurahanByKecamatan(cmbKecamatan.getValueItem().toString());
+            for (Iterator<String> it = hDetail.keySet().iterator(); it.hasNext();) {
+                String key = it.next();
+                cmbKelurahan.addItem(new ItemComponent(key, hDetail.get(key)));
+            }
+            cmbKelurahan.setEnabled(true);
+        });
+        cmbKelurahan.addValueChangeListener(
+                event -> txtKodePos.setValue(loaderAlamat.getKodePosByIdKelurahan(cmbKelurahan.getValueItem().toString()))
+        );
     }
 
     private void doSearchParent() {
@@ -152,6 +208,13 @@ public class DetailCompanyView extends AbstractDetailScreen {
         txtParentName.setValue("");
     }
 
+    private void doResetAlamat() {
+        cmbKabupaten.setEnabled(false);
+        cmbKecamatan.setEnabled(false);
+        cmbKelurahan.setEnabled(false);
+        txtKodePos.setValue("");
+    }
+
     @Override
     public void setModeNew() {
         doReset();
@@ -163,6 +226,9 @@ public class DetailCompanyView extends AbstractDetailScreen {
         txtParentCode.setEnabled(true);
         cmbStatus.setEnabled(true);
         txtAlamat.setEnabled(true);
+        txtRw.setEnabled(true);
+        txtRt.setEnabled(true);
+        cmbProvinsi.setEnabled(true);
 
         btnSave.setVisible(true);
     }
@@ -177,6 +243,9 @@ public class DetailCompanyView extends AbstractDetailScreen {
         txtParentCode.setEnabled(true);
         cmbStatus.setEnabled(true);
         txtAlamat.setEnabled(true);
+        txtRw.setEnabled(true);
+        txtRt.setEnabled(true);
+        cmbProvinsi.setEnabled(true);
 
         btnSave.setVisible(true);
     }
@@ -191,6 +260,9 @@ public class DetailCompanyView extends AbstractDetailScreen {
         txtParentCode.setEnabled(false);
         cmbStatus.setEnabled(false);
         txtAlamat.setEnabled(false);
+        txtRw.setEnabled(false);
+        txtRt.setEnabled(false);
+        cmbProvinsi.setEnabled(false);
 
         btnSave.setVisible(false);
     }
@@ -215,7 +287,6 @@ public class DetailCompanyView extends AbstractDetailScreen {
             pojoCompany.setFax(txtFax.getValue());
             pojoCompany.setParentCode(txtParentCode.getValue());
             pojoCompany.setStatus(cmbStatus.getValueItem().toString());
-//            pojoCompany.setAlamat(txtAlamat.getValue());
 
             if (getMode() == Constants.APP_MODE.MODE_NEW) {
                 servicesCompany.save(pojoCompany);
@@ -250,7 +321,7 @@ public class DetailCompanyView extends AbstractDetailScreen {
         return true;
     }
 
-    private boolean doValidateData() throws Exception {
+    private boolean doValidateData() {
         EzCompany companyDatabase = servicesCompany.getCompany(pojoCompany.getCompanyCode());
         if (companyDatabase.getVersi() > pojoCompany.getVersi()) {
             NotificationHelper.showNotification(Constants.APP_MESSAGE.ERR_DATA_IN_VALID);
@@ -268,6 +339,8 @@ public class DetailCompanyView extends AbstractDetailScreen {
         txtFax.setValue("");
         txtParentCode.setValue("");
         cmbStatus.setValue(null);
+
+        doResetAlamat();
 
         pojoCompany = null;
     }

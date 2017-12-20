@@ -14,7 +14,7 @@ package com.ez2.acc.services;
 
 import com.ez2.acc.dao.ParamDao;
 import com.ez2.acc.entity.EzParam;
-import com.ez2.acc.util.ValidationHelper;
+import com.querydsl.core.types.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -32,11 +32,11 @@ public class ParamServices extends AuditTrailServices {
     @Autowired
     private ParamDao daoParam;
 
-    public List<EzParam> queryList(String key) {
+    public List<EzParam> queryList(Predicate predicate) {
         List<EzParam> list = new ArrayList<>();
         try {
-            if (ValidationHelper.validateValueNotNull(key)) {
-                list = daoParam.queryEzParamsByKeyLike(("%" + key + "%"));
+            if (predicate != null) {
+                list = daoParam.findAll(predicate);
             } else {
                 list = daoParam.findAll();
             }

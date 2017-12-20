@@ -14,6 +14,7 @@ package com.ez2.acc.services;
 
 import com.ez2.acc.dao.KabupatenDao;
 import com.ez2.acc.entity.EzKabupaten;
+import com.querydsl.core.types.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,21 @@ public class KabupatenServices extends AuditTrailServices {
         List<EzKabupaten> list = new ArrayList<>();
         try {
             list = daoKabupaten.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+        }
+        return list;
+    }
+
+    public List<EzKabupaten> queryList(Predicate predicate) {
+        List<EzKabupaten> list = new ArrayList<>();
+        try {
+            if (predicate != null) {
+                list = daoKabupaten.findAll(predicate);
+            } else {
+                list = daoKabupaten.findAll();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());

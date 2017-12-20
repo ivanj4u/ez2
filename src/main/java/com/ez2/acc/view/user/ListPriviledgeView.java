@@ -15,9 +15,12 @@ package com.ez2.acc.view.user;
 import com.ez2.acc.entity.EzGroup;
 import com.ez2.acc.framework.component.NotificationHelper;
 import com.ez2.acc.framework.constants.Constants;
+import com.ez2.acc.framework.criteria.PredicatesBuilder;
 import com.ez2.acc.framework.impl.AbstractDetailScreen;
 import com.ez2.acc.framework.impl.AbstractSearchScreen;
 import com.ez2.acc.services.GroupServices;
+import com.ez2.acc.util.ValidationHelper;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
@@ -111,7 +114,12 @@ public class ListPriviledgeView extends AbstractSearchScreen implements View {
     @Override
     protected void doSearch() {
         try {
-            list = servicesGroup.queryList(txtGroupId.getValue());
+            PredicatesBuilder builder = new PredicatesBuilder();
+            if (ValidationHelper.validateValueNotNull(txtGroupId.getValue())) {
+                builder.add("groupId", ":", txtGroupId.getValue());
+            }
+            PathBuilder<EzGroup> entity = new PathBuilder<>(EzGroup.class, "ezGroup");
+            list = servicesGroup.queryList(builder.build(entity));
             table.setItems(list);
         } catch (Exception e) {
             e.printStackTrace();

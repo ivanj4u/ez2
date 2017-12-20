@@ -13,6 +13,7 @@
 package com.ez2.acc.dao;
 
 import com.ez2.acc.entity.EzProvinsi;
+import com.querydsl.core.types.Predicate;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
@@ -22,4 +23,7 @@ public interface ProvinsiDao extends CrudRepository<EzProvinsi, String>, QueryDs
 
     @Override
     List<EzProvinsi> findAll();
+
+    @Override
+    List<EzProvinsi> findAll(Predicate predicate);
 }

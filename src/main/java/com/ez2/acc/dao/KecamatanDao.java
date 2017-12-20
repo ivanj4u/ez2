@@ -13,6 +13,7 @@
 package com.ez2.acc.dao;
 
 import com.ez2.acc.entity.EzKecamatan;
+import com.querydsl.core.types.Predicate;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
@@ -24,4 +25,7 @@ public interface KecamatanDao extends CrudRepository<EzKecamatan, String>, Query
 
     @Override
     List<EzKecamatan> findAll();
+
+    @Override
+    List<EzKecamatan> findAll(Predicate predicate);
 }

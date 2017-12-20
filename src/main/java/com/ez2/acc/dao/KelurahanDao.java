@@ -13,6 +13,7 @@
 package com.ez2.acc.dao;
 
 import com.ez2.acc.entity.EzKelurahan;
+import com.querydsl.core.types.Predicate;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
@@ -24,4 +25,7 @@ public interface KelurahanDao extends CrudRepository<EzKelurahan, String>, Query
 
     @Override
     List<EzKelurahan> findAll();
+
+    @Override
+    List<EzKelurahan> findAll(Predicate predicate);
 }

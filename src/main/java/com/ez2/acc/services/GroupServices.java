@@ -35,11 +35,15 @@ public class GroupServices extends AuditTrailServices {
 
     public List<EzGroup> queryList(Predicate predicate) {
         List<EzGroup> list = new ArrayList<>();
-
-        if (predicate != null) {
-            list = daoGroup.findAll(predicate);
-        } else {
-            list = daoGroup.findAll();
+        try {
+            if (predicate != null) {
+                list = daoGroup.findAll(predicate);
+            } else {
+                list = daoGroup.findAll();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return list;
     }

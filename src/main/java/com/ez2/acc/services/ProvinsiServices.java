@@ -14,6 +14,7 @@ package com.ez2.acc.services;
 
 import com.ez2.acc.dao.ProvinsiDao;
 import com.ez2.acc.entity.EzProvinsi;
+import com.querydsl.core.types.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,21 @@ public class ProvinsiServices extends AuditTrailServices {
     private static final Logger logger = LoggerFactory.getLogger(ProvinsiServices.class);
 
     @Autowired private ProvinsiDao daoProvinsi;
+
+    public List<EzProvinsi> queryList(Predicate predicate) {
+        List<EzProvinsi> list = new ArrayList<>();
+        try {
+            if (predicate != null) {
+                list = daoProvinsi.findAll(predicate);
+            } else {
+                list = daoProvinsi.findAll();
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     public List<EzProvinsi> getAllProvinsi() {
         List<EzProvinsi> list = new ArrayList<>();

@@ -61,10 +61,10 @@ public class UserServices extends AuditTrailServices {
     public List<EzUser> queryList(Predicate predicate) {
         List<EzUser> list = new ArrayList<>();
         try {
-            if (predicate == null) {
-                list = daoUser.findAll();
-            } else {
+            if (predicate != null) {
                 list = daoUser.findAll(predicate);
+            } else {
+                list = daoUser.findAll();
             }
         } catch (Exception e) {
             e.printStackTrace();

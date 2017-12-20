@@ -13,6 +13,7 @@
 package com.ez2.acc.dao;
 
 import com.ez2.acc.entity.EzParam;
+import com.querydsl.core.types.Predicate;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
@@ -25,4 +26,6 @@ public interface ParamDao extends CrudRepository<EzParam, String>, QueryDslPredi
     @Override
     List<EzParam> findAll();
 
+    @Override
+    List<EzParam> findAll(Predicate predicate);
 }

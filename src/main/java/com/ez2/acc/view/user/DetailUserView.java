@@ -191,7 +191,7 @@ public class DetailUserView extends AbstractDetailScreen {
         return true;
     }
 
-    private boolean doValidateData() throws Exception {
+    private boolean doValidateData() {
         EzUser userDatabase = servicesUser.getUser(pojoUser.getUserId());
         if (userDatabase.getVersi() > pojoUser.getVersi()) {
             NotificationHelper.showNotification(Constants.APP_MESSAGE.ERR_DATA_IN_VALID);
